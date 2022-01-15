@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './css/index.css'
 import App from './App';
-import Mine from './mine';
+import Land from './components/Land';
 
-ReactDOM.render(<Mine />, document.getElementById('root')
+
+
+ReactDOM.render(<App />, document.getElementById('root')
 
 );
 

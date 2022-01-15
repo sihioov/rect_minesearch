@@ -9,19 +9,22 @@ class Mine extends React.Component {
     //         test: 'test',
     //     };
     // }
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         
     }
 
     render() {
         return (
-            <div className="Mine">
-            <button className="Mine">
-                {this.props.value}
-            </button>
-            </div>
-        )
+            <>
+                
+            </>
+            // <div className="Mine">
+            // <button className="Mine">
+            //     {this.props.value}
+            // </button>
+            // </div>
+        );
     }
 }
 
