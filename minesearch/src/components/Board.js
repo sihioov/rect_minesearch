@@ -2,11 +2,17 @@ import React, { Component, useRef } from 'react';
 import Land from './Land';
 
 class Board extends Component {
+
+    
+
     constructor(props) {
+
+        const levels = ['easy', 'medium', 'hard'];
+
         super(props);
         this.board = React.createRef();
         this.state = {
-
+            level: levels[0],
         };
     }
     
@@ -25,7 +31,7 @@ class Board extends Component {
     render() {
         return (
             <>
-                <div className='asd'><Land /></div>
+                <div className='asd' ><Land level={this.state.level}/></div>
             </>
         );
     }

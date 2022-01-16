@@ -1,0 +1,47 @@
+.parts {
+    /* width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-left: 100px solid pink;
+    border-bottom: 50px solid transparent; */
+}
+
+
+.mine {
+    /* display: flex; */
+    /* flex-flow: column wrap; */
+    max-height: 500px;
+    /* height: 25px;
+    width: 25px; */
+    /* margin-left: 2px;
+    margin-top: 4px; */
+    /* float: left; */
+    /* left: 100px; */
+}
+.partsBtn {
+    /* border: 1; */
+    /* position: relative; */
+    padding: 0;
+    height: 27px;
+    width: 27px;
+}
+img {
+    height: 25px;
+    width: 25px;
+    /* background-size: cover; */
+    /* height: 100%;
+    width: 100%; */
+}
+
+/* .mineImg {
+     height: 25px;
+    width: 25px; 
+     margin-left: 2px;
+    margin-top: 4px; 
+    height: auto;
+    width: auto;
+} */
+
+ul {
+    /* list-style: none; */
+}
