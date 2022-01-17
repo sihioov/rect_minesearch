@@ -57,11 +57,9 @@ class Part extends Component {
         console.log(this.props.level);
         return (
             <>
-                
-                    <button className='partsBtn' onMouseDown={this.clickedBtnParts}>
-                        <img alt="" src={process.env.PUBLIC_URL + 'asset/'+ this.state.curImg +'.png'}  className='partsImg' value={this.props.level} id={`mineImg`+this.props.id}/>
-                    </button>
-                
+                <button className='partsBtn' onMouseDown={this.clickedBtnParts}>
+                    <img alt="" src={process.env.PUBLIC_URL + 'asset/'+ this.state.curImg +'.png'}  className='partsImg' value={this.props.level} id={`mineImg`+this.props.id}/>
+                </button>
             </>
         );
     }
