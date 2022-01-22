@@ -63,6 +63,9 @@ class Land extends Component {
     }
 
 
+    checkGameOver = (e) => {
+        console.log(e);
+    }
     render() {
 
         // Random mine-laying by level
@@ -88,7 +91,7 @@ class Land extends Component {
                     {this.state.elements1.map((value, index) => {
                         return (
                             <div key={index} className='part' id={index} onClick={this.generateMine}>
-                                <Part id={value} />
+                                <Part id={value} func={this.checkGameOver}/>
                             </div>
                         )
                     })}

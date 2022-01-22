@@ -13,7 +13,7 @@ class Part extends Component {
         super(props);
 
         this.state = {
-            mode: 'mine',
+            mode: 'mine1',
             curImg: this.__img[0],
             mineNumber: 10,
         }
@@ -54,10 +54,15 @@ class Part extends Component {
         e.preventDefault();
         //if (this.state.mode === 'mine');
 
-        //this.state.mode === 'mine' ? this.changeFloor(e) : {return;}
+        
+
+        // GameOver
         if (this.state.mode === 'mine') {
             // this.changeImage(e);
             console.log('mine');
+            this.gameOver();
+        } else {
+
         }
         
         this.changeImage(e);
@@ -78,6 +83,14 @@ class Part extends Component {
     upBtnPart = (e) => {
         e.preventDefault();
     }
+
+
+    gameOver = (e) => {
+        this.props.func('GameOver!');
+    }
+
+    
+
 
     changeFloor = (e) => {
         e.preventDefault();
@@ -135,7 +148,7 @@ class Part extends Component {
         console.log(this.props.level);
         return (
             <>
-                <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedBtnPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} >
+                <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} >
                     {/* <img alt="" src={process.env.PUBLIC_URL + 'asset/'+ this.state.curImg +'.png'}  value={this.props.level} id={`mineImg`+this.props.id}/> */}
                     <img alt="" value={this.props.level} id={`mineImg`+this.props.id} className='btnImg'/>
                 </button>
