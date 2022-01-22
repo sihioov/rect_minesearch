@@ -10,7 +10,7 @@ class Land extends Component {
 
         this.state = {
             count: '20',
-            elements1: ['1', '2', '3', '4', '5'],
+            elements1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
             level: this.props.level,
             mineCount: 0,
             mineCountCategory: [3,10,30],
@@ -23,13 +23,7 @@ class Land extends Component {
 
     }
 
-    // randomMineLaying = (level) => {
-    //     //this.generateMine(level);
-    //     this.generateMine(level);
-    //     console.log('Random mining number : ' + level);
-    // }
-
-    generateMine = () => {
+    generateMine = (e) => {
         switch (this.state.level) {
             case 'easy':
                 this.setState({
@@ -49,6 +43,14 @@ class Land extends Component {
             default:
                 break;
         }
+        
+
+        // Todo: make combination alg
+        const mineCount = this.state.mineCount;
+        const arry = new Array(mineCount);
+        const leftCount = mineCount;
+
+
         this.drawMine();
     }
 
@@ -66,7 +68,7 @@ class Land extends Component {
         // Random mine-laying by level
         //this.randomMineLaying(this.state.level);
             
-        const elements = ['1', '2', '3', '4', '5'];
+        const elements = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
         console.log(this.state.level + 'test');
         // this.state.elements1.forEach((item, index, array) => {
         //     console.log(item)
