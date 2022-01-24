@@ -7,14 +7,18 @@ class Board extends Component {
 
     constructor(props) {
 
-        const levels = ['easy', 'medium', 'hard'];
+        //const levels = ['easy', 'medium', 'hard'];
 
+        // Easy: 0, Medium: 1, Hard: 2
+        const GameLevel = [0,1,2]
         super(props);
         this.board = React.createRef();
         this.state = {
-            level: levels[0],
+            curLevel: GameLevel[0],
         };
     }
+
+    // Todo: Level set form
     
     componentDidMount = (e) => {
         var a = document.getElementsByClassName('zxc');
@@ -31,7 +35,7 @@ class Board extends Component {
     render() {
         return (
             <>
-                <div className='asd' ><Land level={this.state.level}/></div>
+                <div className='asd' ><Land curLevel={this.state.curLevel}/></div>
             </>
         );
     }

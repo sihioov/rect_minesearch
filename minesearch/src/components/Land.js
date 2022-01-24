@@ -11,11 +11,16 @@ class Land extends Component {
         this.state = {
             count: '20',
             elements1: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-            level: this.props.level,
+            curLevel: this.props.curLevel,
             mineCount: 0,
-            mineCountCategory: [3,10,30],
+            mineCountCategory: [3,6,9],
             initPart: '',
-        }    
+            isGenerateMine: false,
+        }
+
+       
+            
+            
     }
 
 
@@ -24,42 +29,61 @@ class Land extends Component {
     }
 
     generateMine = (e) => {
-        switch (this.state.level) {
-            case 'easy':
-                this.setState({
-                    mineCount: 3,
-                })
-                break;
-            case 'medium':
-                this.setState({
-                    mineCount: 10,
-                })
-                break;
-            case 'hard':
-                this.setState({
-                    mineCount: 30,
-                })
-                break;
-            default:
-                break;
-        }
+
+        if(this.state.isGenerateMine)
+            return;        
         
-
-        // Todo: make combination alg
-        const mineCount = this.state.mineCount;
         const arry = new Array(mineCount);
-        const leftCount = mineCount;
+        var mineCount = this.state.mineCount;
+        var leftMineCount = mineCount;
+        console.log('Generate : '+mineCount);
+
+        // Probability
+        // Todo: Complete array gen
+        var random = 0;
+        var standNum = 0;
+        var maxSize = 10; // state
+        const MAX = 10;
+        var i;
+        for (i = 0; i < MAX; i++) {
+            standNum = leftMineCount/maxSize;
+            random = Math.random(99);
+            console.log('Stand num : ' + standNum + '   '+ 'Random Num : ' + random);
+            if (random <= standNum) {
+                console.log('This is mine');
+                arry.push(1);
+                maxSize--;
+                leftMineCount--;
+            }
+            else {
+                console.log('This is default');
+                arry.push(0);
+                maxSize--;
+            } 
+        }
 
 
-        this.drawMine();
+        
+        
+        // Todo: plantMine()
+
+        //this.plantMine();
+        // this.setState({
+        //     isGenerateMine: true,
+        // })
     }
 
-    drawMine = (e) => {
+    plantMine = (e) => {
         
     }
 
     componentDidMount = () => {
-        //console.log('didmound')
+
+        console.log('Did mount')
+
+        this.setState({
+            mineCount: this.state.mineCountCategory[this.state.curLevel],
+        })
     }
 
 
@@ -76,7 +100,8 @@ class Land extends Component {
         // this.state.elements1.forEach((item, index, array) => {
         //     console.log(item)
         // })
-        console.log('render')
+        //console.log('render')
+        //this.generateMine();
         this.state.elements1.map((value, index) => {
             //console.log(value)
         })
@@ -91,7 +116,8 @@ class Land extends Component {
                     {this.state.elements1.map((value, index) => {
                         return (
                             <div key={index} className='part' id={index} onClick={this.generateMine}>
-                                <Part id={value} func={this.checkGameOver}/>
+                                {/* <Part id={value} func={this.checkGameOver} onClick={this.generateMine}/> */}
+                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine}/>
                             </div>
                         )
                     })}
