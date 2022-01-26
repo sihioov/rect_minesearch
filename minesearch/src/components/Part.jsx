@@ -13,7 +13,7 @@ class Part extends Component {
         super(props);
 
         this.state = {
-            mode: 'mine1',
+            partMode: this.props.partMode,
             curImg: this.__img[0],
             mineNumber: 10,
         }
@@ -57,7 +57,7 @@ class Part extends Component {
         
 
         // GameOver
-        if (this.state.mode === 'mine') {
+        if (this.state.partMode === 'mine') {
             // this.changeImage(e);
             console.log('mine');
             this.gameOver();
