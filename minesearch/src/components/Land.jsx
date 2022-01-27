@@ -54,14 +54,20 @@ class Land extends Component {
         for (var i = 0; i < landSize; i++) {
             standNum = leftMineCount/leftParts;
             random = Math.random(99);
-            console.log('Stand num : ' + standNum + '  '+ 'Random Num : ' + random);
+            console.log(`index: ${i+1}, left part: ${leftParts}, left mine: ${leftMineCount}`)
+            // console.log('index : '+(i+1)+','+`left part ${random}`);
+
+            // console.log('left Part : '+leftParts);
+            // console.log('left mine '+leftMineCount);
+            console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
+            console.log('');
             if (random <= standNum) {
-                console.log('This is mine');
+                // console.log('This is mine');
                 parts[i] = 1;
                 leftParts--;
                 leftMineCount--;
             } else {
-                console.log('This is default');
+                //console.log('This is default');
                 parts[i] = 0;
                 // parts.push('0');
                 leftParts--;
@@ -97,6 +103,8 @@ class Land extends Component {
     }
 
     componentDidMount = () => {
+
+        // Game setting
         this.setState({
             mineCount: this.state.mineCountCategory[this.state.curLevel],
             landSize: this.state.landSizeCategory[this.state.curLevel],
