@@ -22,8 +22,6 @@ class Land extends Component {
             landSizeCategory: [9*9, 16*16, 16*30],
             partsModeArry: [],
         }
-            
-            
     }
 
 
@@ -61,6 +59,14 @@ class Land extends Component {
             // console.log('left mine '+leftMineCount);
             console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
             console.log('');
+
+            // 
+            if (standNum == 0) {
+                console.log('Probability = 0');
+                parts.fill(0, i);
+                break;
+            }
+
             if (random <= standNum) {
                 // console.log('This is mine');
                 parts[i] = 1;
@@ -74,6 +80,7 @@ class Land extends Component {
             } 
         }
         console.log(parts);
+
         // for (var i = 0; i<landSize; i++)
         //     console.log('parts : '+parts[i]);
 
@@ -116,7 +123,7 @@ class Land extends Component {
         console.log(e);
     }
     render() {
-        console.log('this : '+this.state.partsModeArry)
+        //console.log(this.state.partsModeArry);
         // Random mine-laying by level
         //this.randomMineLaying(this.state.level);
             
