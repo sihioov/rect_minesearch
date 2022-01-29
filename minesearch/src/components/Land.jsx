@@ -12,7 +12,7 @@ class Land extends Component {
         // Add modeCategory state
         this.state = {
             count: '20',
-            partsId: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], // Todo: Auto set parts by level
+            partsId: [], // Todo: Auto set parts by level
             curLevel: this.props.curLevel,
             mineCount: 0,
             mineCountCategory: [10,40,99],
@@ -20,6 +20,7 @@ class Land extends Component {
             isGenerateMine: false,
             landSize: '',
             landSizeCategory: [9*9, 16*16, 16*30],
+            //landSizeCategory: [3, 4, 5],
             partsModeArry: [],
         }
     }
@@ -113,13 +114,22 @@ class Land extends Component {
 
     componentDidMount = () => {
 
-        // Game setting
+        // Game setting        
         this.setState({
             mineCount: this.state.mineCountCategory[this.state.curLevel],
             landSize: this.state.landSizeCategory[this.state.curLevel],
+            partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
+            //partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
+            //partsId: this.state.partsId.from(Array(this.state.landSize.keys()))
+            //partsId: this.state.partsId
         })
+        console.log('this landsize : '+this.state.landSize);
+        //tempArray.from(Array(this.state.landSize).keys())
+        
+        
     }
 
+    
 
     checkGameOver = (e) => {
         console.log(e);
