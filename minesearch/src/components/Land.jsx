@@ -12,7 +12,7 @@ class Land extends Component {
         // Add modeCategory state
         this.state = {
             count: '20',
-            partsId: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], // Todo: Auto set parts by level
+            partsId: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], // Todo: Auto set parts by level
             curLevel: this.props.curLevel,
             mineCount: 0,
             mineCountCategory: [10,40,99],
@@ -50,6 +50,7 @@ class Land extends Component {
         var count = 0;
 
         for (var i = 0; i < landSize; i++) {
+
             standNum = leftMineCount/leftParts;
             random = Math.random(99);
             console.log(`index: ${i+1}, left part: ${leftParts}, left mine: ${leftMineCount}`)
@@ -107,6 +108,7 @@ class Land extends Component {
     }
 
     plantMine = (e) => {
+
     }
 
     componentDidMount = () => {
@@ -147,8 +149,8 @@ class Land extends Component {
                 <div className='land' id='land' >
                     {this.state.partsId.map((value, index) => {
                         return (
-                            <div key={index} className='part' id={index-1} onClick={this.generateMine}>
-                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index-1]}/>
+                            <div key={index} className='part' id={index} onClick={this.generateMine}>
+                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                             </div>
                         )
                     })}
