@@ -16,7 +16,7 @@
 .mine {
     /* display: flex; */
     /* flex-flow: column wrap; */
-    max-height: 500px;
+    /* max-height: 500px; */
     /* height: 25px;
     width: 25px; */
     /* margin-left: 2px;
@@ -26,10 +26,10 @@
 }
 
 .btnImg {
-    display: inline-block;
+    /* display: inline-block;
     text-align: center;
     width: 50%;
-    height: 50%;
+    height: 50%; */
     
 }
 

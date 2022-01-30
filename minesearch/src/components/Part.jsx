@@ -148,10 +148,10 @@ class Part extends Component {
         console.log(this.props.level);
         return (
             <>
-                <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} >
+                {/* <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} > */}
                     {/* <img alt="" src={process.env.PUBLIC_URL + 'asset/'+ this.state.curImg +'.png'}  value={this.props.level} id={`mineImg`+this.props.id}/> */}
-                    <img alt="" value={this.props.level} id={`mineImg`+this.props.id} className='btnImg'/>
-                </button>
+                    {/* <img alt="" value={this.props.level} id={`mineImg`+this.props.id} className='btnImg'/> */}
+                {/* </button> */}
             </>
         );
     }

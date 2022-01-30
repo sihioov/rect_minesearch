@@ -22,7 +22,12 @@ class Land extends Component {
             isGenerateMine: false,
             landSize: '',
             landSizeCategory: [9*9, 16*16, 16*30],
-            //landSizeCategory: [3, 4, 5],
+            lineLengthCategory: [9, 16, 16],
+            lineLength:'',
+            horizontalCategory: [9, 16, 30],
+            horizontalLength:'',
+            verticalCategory:[9, 16, 16],
+            verticalLength: '',
             partsModeArry: [],
         }
     }
@@ -66,18 +71,15 @@ class Land extends Component {
 
             // 
             if (standNum == 0) {
-                console.log('Probability = 0');
                 parts.fill(0, i);
                 break;
             }
 
-            if (random <= standNum) {
-                // console.log('This is mine');
+            if (random <= standNum) {   // Mine
                 parts[i] = 1;
                 leftParts--;
                 leftMineCount--;
-            } else {
-                //console.log('This is default');
+            } else {                    // Not mine
                 parts[i] = 0;
                 // parts.push('0');
                 leftParts--;
@@ -85,24 +87,6 @@ class Land extends Component {
         }
         console.log(parts);
 
-        // for (var i = 0; i<landSize; i++)
-        //     console.log('parts : '+parts[i]);
-
-        // this.setState({
-        //     //isGenerateMine: true,
-        // })
-
-        
-        
-        // Todo: plantMine()
-
-        // this.plantMine();
-        
-        // this.setState((prevState) => ({
-        //     //partsModeArry: [...prevState.partsModeArry, parts],
-        //     partsModeArry: test,
-        //     isGenerateMine: true,
-        // }));
 
         this.setState({
             partsModeArry: parts,
@@ -120,6 +104,7 @@ class Land extends Component {
         this.setState({
             mineCount: this.state.mineCountCategory[this.state.curLevel],
             landSize: this.state.landSizeCategory[this.state.curLevel],
+            lineLength: this.state.lineLengthCategory[this.state.curLevel],
             partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
             //partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
             //partsId: this.state.partsId.from(Array(this.state.landSize.keys()))
@@ -137,34 +122,71 @@ class Land extends Component {
         console.log(e);
     }
     render() {
-        //console.log(this.state.partsModeArry);
-        // Random mine-laying by level
-        //this.randomMineLaying(this.state.level);
-            
-        const elements = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        console.log(this.state.level + 'test');
-        // this.state.elements1.forEach((item, index, array) => {
-        //     console.log(item)
-        // })
-        //console.log('render')
-        //this.generateMine();
-        // this.state.partsId.map((value, index) => {
-        //     //console.log(value)
-        // })
+        
+        const lineLength = this.state.lineLength;
+        const landSize = this.state.landSize;
 
-        // elements.push('7');
-        // {elements.forEach((item, index, array) => {
-        //     console.log(item)
-        // })}
         return (
             <>
                 <div className='land' id='land' >
                     {this.state.partsId.map((value, index) => {
+                        if (index == 0) {
+                            // console.log('index : '+(landSize - lineLength));
+                            return (
+                                <div key={index} className='firstPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else if (index == (landSize -1)) {
                         return (
-                            <div key={index} className='part' id={index} onClick={this.generateMine}>
+                            <div key={index} className='lastPart' id={index} onClick={this.generateMine}>
+                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                            </div> 
+                            )
+                        } else if (index == lineLength -1) {
+                            return (
+                                <div key={index} className='firstLeftPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else if (index == (landSize - lineLength)) {
+                        return (
+                            <div key={index} className='lastLeftPart' id={index} onClick={this.generateMine}>
                                 <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                             </div>
-                        )
+                            )
+                        } else if (index < lineLength) {
+                            return (
+                                <div key={index} className='topPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else if ((index%(lineLength)) == 0) {
+                            return (
+                                <div key={index} className='leftPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else if((index%(lineLength)) == (lineLength - 1)) {
+                            return (
+                                <div key={index} className='rightPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else if(index > landSize - lineLength) {
+                            return (
+                                <div key={index} className='bottomPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div key={index} className='defaultPart' id={index} onClick={this.generateMine}>
+                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                </div>
+                            )
+                        }
+                        
                     })}
                 </div>
             </>
