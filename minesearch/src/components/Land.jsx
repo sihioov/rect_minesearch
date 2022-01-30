@@ -1,11 +1,13 @@
 import { Component } from 'react';
 import Part from './Part';
 import '../css/land.css'
+
+
+// Todo: Part align
 class Land extends Component {
     
     static a = ['asd', 'zxc'];
 
-    // Todo: partsId set
     constructor(props) {
         super(props);
 

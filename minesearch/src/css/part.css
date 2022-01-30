@@ -4,6 +4,7 @@
     border-top: 50px solid transparent;
     border-left: 100px solid pink;
     border-bottom: 50px solid transparent; */
+    width: 10px;
 }
 
 .default {
@@ -50,8 +51,8 @@
 }
 
 img {
-    height: 23px;
-    width: 23px;
+    /* height: 23px; */
+    /* width: 23px; */
     /* background-size: cover; */
     /* height: 100%;
     width: 100%; */
