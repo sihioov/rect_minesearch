@@ -130,26 +130,26 @@ class Land extends Component {
             <>
                 <div className='land' id='land' >
                     {this.state.partsId.map((value, index) => {
-                        if (index == 0) {
+                        if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
                                 <div key={index} className='firstPart' id={index} onClick={this.generateMine}>
                                     <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                                 </div>
                             )
-                        } else if (index == (landSize -1)) {
+                        } else if (index === (landSize -1)) {
                         return (
                             <div key={index} className='lastPart' id={index} onClick={this.generateMine}>
                                 <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                             </div> 
                             )
-                        } else if (index == lineLength -1) {
+                        } else if (index === lineLength -1) {
                             return (
                                 <div key={index} className='firstLeftPart' id={index} onClick={this.generateMine}>
                                     <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                                 </div>
                             )
-                        } else if (index == (landSize - lineLength)) {
+                        } else if (index === (landSize - lineLength)) {
                         return (
                             <div key={index} className='lastLeftPart' id={index} onClick={this.generateMine}>
                                 <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
@@ -161,13 +161,13 @@ class Land extends Component {
                                     <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                                 </div>
                             )
-                        } else if ((index%(lineLength)) == 0) {
+                        } else if ((index%(lineLength)) === 0) {
                             return (
                                 <div key={index} className='leftPart' id={index} onClick={this.generateMine}>
                                     <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
                                 </div>
                             )
-                        } else if((index%(lineLength)) == (lineLength - 1)) {
+                        } else if((index%(lineLength)) === (lineLength - 1)) {
                             return (
                                 <div key={index} className='rightPart' id={index} onClick={this.generateMine}>
                                     <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>

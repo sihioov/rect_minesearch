@@ -50,6 +50,11 @@ class Part extends Component {
         }
     }
 
+    selectRelatedPart = (e) => {
+        const partId = e.target.id;
+        console.log('className : '+partId.className);
+    }
+
     clickedLeftPart = (e) => {
         e.preventDefault();
         //if (this.state.mode === 'mine');
@@ -148,10 +153,12 @@ class Part extends Component {
         console.log(this.props.level);
         return (
             <>
-                {/* <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} > */}
-                    {/* <img alt="" src={process.env.PUBLIC_URL + 'asset/'+ this.state.curImg +'.png'}  value={this.props.level} id={`mineImg`+this.props.id}/> */}
-                    {/* <img alt="" value={this.props.level} id={`mineImg`+this.props.id} className='btnImg'/> */}
-                {/* </button> */}
+                <div className='partsDiv'/>
+                {/* <button className='partsDiv' /> */}
+                {/* <button className='partsDiv'/> */}
+                {/* <div className='partsDiv'> </div> */}
+                {/* <button className='partsDiv' onMouseDown={this.downedBtnPart} onClick={this.clickedPart} onMouseUp={this.upBtnPart} id={`mineDiv`+this.props.id} >
+                </button> */}
             </>
         );
     }

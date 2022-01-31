@@ -7,7 +7,7 @@
 }
 
 .part {
-    /* position: relative; */
+    /* text-align: center; */
     /* display: flex; */
     /* flex-flow: column wrap; */
     /* max-height: 500px; */
@@ -28,6 +28,10 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid green;
+    /* text-align: center; */
+    align-items: center;
+    
+    /* display: flex; */
     float: left;
 }
 .leftPart {
@@ -35,6 +39,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid red;
+    text-align: center;
     float: left;
 }
 .rightPart {
@@ -42,6 +47,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid gold;
+    text-align: center;
     float: left;
 }
 .topPart {
@@ -49,6 +55,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid aqua;
+    text-align: center;
     float: left;
 }
 .bottomPart {
@@ -56,6 +63,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid palevioletred;
+    text-align: center;
     float: left;
 }
 
@@ -64,6 +72,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
+    text-align: center;
     float: left;
 }
 
@@ -72,6 +81,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
+    text-align: center;
     float: left;
 }
 
@@ -80,6 +90,7 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
+    text-align: center;
     float: left;
 }
 
@@ -88,5 +99,6 @@
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
+    text-align: center;
     float: left;
 }
