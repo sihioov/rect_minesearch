@@ -32,7 +32,7 @@ class Land extends Component {
         }
     }
 
-
+    // Todo: Auto landSize set
     renderParts = (e) => {
 
     }
