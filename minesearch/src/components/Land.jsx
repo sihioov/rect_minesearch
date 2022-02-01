@@ -23,14 +23,15 @@ class Land extends Component {
             initCell: '',
             isGenerateMine: false,
             landSize: '',
-            landSizeCategory: [9*9, 16*16, 16*30],
+            landSizeCategory: [9*9, 16*16, 30*16],
             lineLengthCategory: [9, 16, 16],
             lineLength:'',
-            horizontalCategory: [9, 16, 30],
+            horizontalLengthCategory: [9, 16, 30],
             horizontalLength:'',
-            verticalCategory:[9, 16, 16],
+            verticalLengthCategory:[9, 16, 16],
             verticalLength: '',
-            cellsModeArry: [],
+            cellTypeArray: [],
+            defaultCellSize: 4.4,
         }
     }
 
@@ -40,9 +41,20 @@ class Land extends Component {
             totalMineCount: this.state.mineCountCategory[this.state.curLevel],
             landSize: this.state.landSizeCategory[this.state.curLevel],
             lineLength: this.state.lineLengthCategory[this.state.curLevel],
+            horizontalLength: this.state.horizontalLengthCategory[this.state.curLevel],
+            verticalLength: this.state.verticalLengthCategory[this.state.curLevel],
             cellsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
         })
-        console.log('this landsize : '+this.state.landSize);
+
+        var land = document.getElementsByClassName('land')[0];
+
+        const defaultCellSize = this.state.defaultCellSize;
+        const horizontalLength = this.state.horizontalLengthCategory[this.state.curLevel];
+        const verticalLength = this.state.verticalLengthCategory[this.state.curLevel];
+        
+        
+        land.style.width = defaultCellSize*horizontalLength+'px';
+        land.style.height = defaultCellSize*verticalLength+'px';
     }
 
     // Game over
@@ -60,7 +72,7 @@ class Land extends Component {
     // Todo: Generate entire cell array
 
     generateMine = (e) => {
-
+        
         if(this.state.isGenerateMine)
             return;        
         
@@ -111,14 +123,14 @@ class Land extends Component {
 
 
         this.setState({
-            cellsModeArry: cells,
+            cellTypeArray: cells,
             isGenerateMine: true,
         })
     }
 
 
     generatecells = (e) => {
-        const cells = this.state.cellsModeArry;
+        const cells = this.state.cellTypeArray;
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
 
@@ -143,10 +155,11 @@ class Land extends Component {
     }
 
     render() {
-        
-        const lineLength = this.state.lineLength;
+        const horizontalLength = this.state.horizontalLength; 
         const landSize = this.state.landSize;
 
+        // console.log(`수평의(horizontal) : `+horizontalLength);
+        // console.log(`세로의(vertical)) : `+verticalLength);
         return (
             <>
                 <div className='land' id='land' >
@@ -155,55 +168,55 @@ class Land extends Component {
                             // console.log('index : '+(landSize - lineLength));
                             return (
                                 <div key={index} className='top-left-corner' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
                             <div key={index} className='bottom-right-corner' id={index} onClick={this.generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div> 
                             )
-                        } else if (index === lineLength -1) {
+                        } else if (index === horizontalLength -1) {
                             return (
                                 <div key={index} className='top-right-corner' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
-                        } else if (index === (landSize - lineLength)) {
+                        } else if (index === (landSize - horizontalLength)) {
                         return (
                             <div key={index} className='bottom-left-corner' id={index} onClick={this.generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div>
                             )
-                        } else if (index < lineLength) {
+                        } else if (index < horizontalLength) {
                             return (
                                 <div key={index} className='top-side' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
-                        } else if ((index % lineLength) === 0) {
+                        } else if ((index % horizontalLength) === 0) {
                             return (
                                 <div key={index} className='left-side' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
-                        } else if((index % lineLength) === (lineLength - 1)) {
+                        } else if((index % horizontalLength) === (horizontalLength - 1)) {
                             return (
                                 <div key={index} className='right-side' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
-                        } else if(index > landSize - lineLength) {
+                        } else if(index > landSize - horizontalLength) {
                             return (
                                 <div key={index} className='bottom-side' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else {
                             return (
                                 <div key={index} className='center-cell' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         }

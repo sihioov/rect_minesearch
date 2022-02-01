@@ -11,7 +11,7 @@ class Board extends Component {
         super(props);
         this.board = React.createRef();
         this.state = {
-            curLevel: GameLevel[0],
+            curLevel: GameLevel[2],
         };
     }
 

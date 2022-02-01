@@ -1,9 +1,11 @@
 .land {
     /* display:flex; */
     /* flex-flow:column wrap; */
-    max-width: 40px;
+    /* width: 39.6px;
+    height: 39.6px; */
     /* float: left; */
     /* background:#ccc; */
+    background-color: red;
 }
 
 .part {
