@@ -7,7 +7,7 @@
 }
 
 .part {
-    /* text-align: center; */
+    /* align-items: center; */
     /* display: flex; */
     /* flex-flow: column wrap; */
     /* max-height: 500px; */
@@ -23,82 +23,79 @@
     margin-top: 4px; */
     /* left: 100px; */
 }
-.defaultPart {
+.center-cell {
     height: 4px;
     width: 4px;
     background-color: white;
-    border: 0.1px solid green;
-    /* text-align: center; */
     align-items: center;
-    
-    /* display: flex; */
+    border: 0.1px solid green;
     float: left;
 }
-.leftPart {
+.left-side {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid red;
-    text-align: center;
+    align-items: center;
     float: left;
 }
-.rightPart {
+.right-side {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid gold;
-    text-align: center;
+    align-items: center;
     float: left;
 }
-.topPart {
+.top-side {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid aqua;
-    text-align: center;
+    align-items: center;
     float: left;
 }
-.bottomPart {
+.bottom-side {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid palevioletred;
-    text-align: center;
+    align-items: center;
     float: left;
 }
 
-.firstPart {
+.top-left-corner {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
-    text-align: center;
+    align-items: center;
     float: left;
 }
 
-.firstLeftPart {
+.top-right-corner {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
-    text-align: center;
+    align-items: center;
     float: left;
 }
 
-.lastLeftPart {
+.bottom-left-corner {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
-    text-align: center;
+    align-items: center;
     float: left;
 }
 
-.lastPart {
+.bottom-right-corner {
     height: 4px;
     width: 4px;
     background-color: white;
     border: 0.1px solid black;
-    text-align: center;
+    align-items: center;
     float: left;
 }

@@ -1,9 +1,11 @@
 import { Component } from 'react';
-import Part from './Part';
+// import cell from './cell';
+import Cell from './Cell';
+
 import '../css/land.css'
 
 
-// Todo: Part align
+// Todo: cell align
 class Land extends Component {
     
     static a = ['asd', 'zxc'];
@@ -14,11 +16,11 @@ class Land extends Component {
         // Add modeCategory state
         this.state = {
             count: '20',
-            partsId: [], // Todo: Auto set parts by level
+            cellsId: [], // Todo: Auto set cells by level
             curLevel: this.props.curLevel,
-            mineCount: 0,
+            totalMineCount: 0,
             mineCountCategory: [10,40,99],
-            initPart: '',
+            initCell: '',
             isGenerateMine: false,
             landSize: '',
             landSizeCategory: [9*9, 16*16, 16*30],
@@ -28,14 +30,34 @@ class Land extends Component {
             horizontalLength:'',
             verticalCategory:[9, 16, 16],
             verticalLength: '',
-            partsModeArry: [],
+            cellsModeArry: [],
         }
     }
 
-    // Todo: Auto landSize set
-    renderParts = (e) => {
+    // Initial game setting
+    init_game_setting = () => {
+        this.setState({
+            totalMineCount: this.state.mineCountCategory[this.state.curLevel],
+            landSize: this.state.landSizeCategory[this.state.curLevel],
+            lineLength: this.state.lineLengthCategory[this.state.curLevel],
+            cellsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
+        })
+        console.log('this landsize : '+this.state.landSize);
+    }
+
+    // Game over
+    checkGameOver = (e) => {
+        console.log(e);
+    }
+
+
+    
+    rendercells = (e) => {
 
     }
+
+    // Todo: Auto landSize set by gmae level
+    // Todo: Generate entire cell array
 
     generateMine = (e) => {
 
@@ -43,11 +65,11 @@ class Land extends Component {
             return;        
         
         const landSize = this.state.landSize;
-        const mineCount = this.state.mineCount;
+        const totalMineCount = this.state.totalMineCount;
 
-        const parts = new Array(landSize);
-        var leftMineCount = mineCount;
-        var leftParts = landSize;
+        const cells = new Array(landSize);
+        var leftMineCount = totalMineCount;
+        var leftCells = landSize;
         console.log('Generate : '+landSize);
         const test = ['asd', 'zxc', 'qwe']
         // Probability
@@ -59,68 +81,67 @@ class Land extends Component {
 
         for (var i = 0; i < landSize; i++) {
 
-            standNum = leftMineCount/leftParts;
+            standNum = leftMineCount/leftCells;
             random = Math.random(99);
-            console.log(`index: ${i+1}, left part: ${leftParts}, left mine: ${leftMineCount}`)
-            // console.log('index : '+(i+1)+','+`left part ${random}`);
+            console.log(`index: ${i+1}, left cell: ${leftCells}, left mine: ${leftMineCount}`)
+            // console.log('index : '+(i+1)+','+`left cell ${random}`);
 
-            // console.log('left Part : '+leftParts);
+            // console.log('left cell : '+leftcells);
             // console.log('left mine '+leftMineCount);
             console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
             console.log('');
 
             // 
             if (standNum == 0) {
-                parts.fill(0, i);
+                cells.fill(0, i);
                 break;
             }
 
             if (random <= standNum) {   // Mine
-                parts[i] = 1;
-                leftParts--;
+                cells[i] = 'mine';
+                leftCells--;
                 leftMineCount--;
             } else {                    // Not mine
-                parts[i] = 0;
-                // parts.push('0');
-                leftParts--;
+                cells[i] = 0;
+                // cells.push('0');
+                leftCells--;
             } 
         }
-        console.log(parts);
+        console.log(cells);
 
 
         this.setState({
-            partsModeArry: parts,
+            cellsModeArry: cells,
             isGenerateMine: true,
         })
     }
 
-    plantMine = (e) => {
 
+    generatecells = (e) => {
+        const cells = this.state.cellsModeArry;
+        const verticalLength = this.state.verticalLength;
+        const horizontalLength = this.state.horizontalLength;
+
+        // 
+        const firstcell = cells[0];
+        // const topcell
+        
+        
+        // for (var i = 0; i<)
+        // const topcells = cells[]
     }
+
+    // plantMine = (e) => {
+
+    // }
 
     componentDidMount = () => {
 
         // Game setting        
-        this.setState({
-            mineCount: this.state.mineCountCategory[this.state.curLevel],
-            landSize: this.state.landSizeCategory[this.state.curLevel],
-            lineLength: this.state.lineLengthCategory[this.state.curLevel],
-            partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
-            //partsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
-            //partsId: this.state.partsId.from(Array(this.state.landSize.keys()))
-            //partsId: this.state.partsId
-        })
-        console.log('this landsize : '+this.state.landSize);
+        this.init_game_setting();
         //tempArray.from(Array(this.state.landSize).keys())
-        
-        
     }
 
-    
-
-    checkGameOver = (e) => {
-        console.log(e);
-    }
     render() {
         
         const lineLength = this.state.lineLength;
@@ -129,60 +150,60 @@ class Land extends Component {
         return (
             <>
                 <div className='land' id='land' >
-                    {this.state.partsId.map((value, index) => {
+                    {this.state.cellsId.map((value, index) => {
                         if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
-                                <div key={index} className='firstPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='top-left-corner' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
-                            <div key={index} className='lastPart' id={index} onClick={this.generateMine}>
-                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                            <div key={index} className='bottom-right-corner' id={index} onClick={this.generateMine}>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                             </div> 
                             )
                         } else if (index === lineLength -1) {
                             return (
-                                <div key={index} className='firstLeftPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='top-right-corner' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize - lineLength)) {
                         return (
-                            <div key={index} className='lastLeftPart' id={index} onClick={this.generateMine}>
-                                <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                            <div key={index} className='bottom-left-corner' id={index} onClick={this.generateMine}>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                             </div>
                             )
                         } else if (index < lineLength) {
                             return (
-                                <div key={index} className='topPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='top-side' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
-                        } else if ((index%(lineLength)) === 0) {
+                        } else if ((index % lineLength) === 0) {
                             return (
-                                <div key={index} className='leftPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='left-side' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
-                        } else if((index%(lineLength)) === (lineLength - 1)) {
+                        } else if((index % lineLength) === (lineLength - 1)) {
                             return (
-                                <div key={index} className='rightPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='right-side' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
                         } else if(index > landSize - lineLength) {
                             return (
-                                <div key={index} className='bottomPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='bottom-side' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
                         } else {
                             return (
-                                <div key={index} className='defaultPart' id={index} onClick={this.generateMine}>
-                                    <Part id={value} func={this.checkGameOver} onClick={this.generateMine} partMode={this.state.partsModeArry[index]}/>
+                                <div key={index} className='center-cell' id={index} onClick={this.generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellMode={this.state.cellsModeArry[index]}/>
                                 </div>
                             )
                         }

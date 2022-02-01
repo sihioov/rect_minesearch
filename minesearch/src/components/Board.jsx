@@ -6,9 +6,6 @@ class Board extends Component {
     
 
     constructor(props) {
-
-        //const levels = ['easy', 'medium', 'hard'];
-
         // Easy: 0, Medium: 1, Hard: 2
         const GameLevel = [0,1,2]
         super(props);
