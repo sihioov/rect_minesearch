@@ -37,29 +37,8 @@ class Land extends Component {
         }
     }
 
-    
-    // reinit_game = () => {
-    //     this.props.reinit_game(this.state.curGameLevel);
-    //     // this.setState({
-    //     //     curGameLevel: this.state.curGameLevel,
-    //     // })
-    // }
-    // Initial game setting
-    // test = (props) => {
-        
-    //     this.setState((props) => {
-    //         return {curGameLevel: props.curGameLevel};
-    //     });
-    // }
-    
-    // static getDerivedStateFromProps(nextProps, prevState) {
-    //     if (nextProps.curGameLevel !== prevState.curGameLevel) {
-    //         return { curGameLevel: nextProps.curGameLevel };
-    //     }
-    //     return null;   
-    // }
 
-    init_game_setting = () => {
+    f_init_game_setting = () => {
 
         this.setState((props) => {
             return {
@@ -69,12 +48,13 @@ class Land extends Component {
             lineLength: this.state.lineLengthCategory[props.curGameLevel],
             horizontalLength: this.state.horizontalLengthCategory[props.curGameLevel],
             verticalLength: this.state.verticalLengthCategory[props.curGameLevel],
-            cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()]
+            cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()],
+            
             };
         })
     }
 
-    draw_land = () => {
+    f_drawLand = () => {
 
         var land = document.getElementsByClassName('land')[0];
         const defaultCellSize  = this.state.defaultCellSize;
@@ -88,6 +68,7 @@ class Land extends Component {
 
         // Send data to Board component
         this.props.setLandVerticalLength(land.style.width);
+        
     }
 
     // shouldComponentUpdate = (prevProps, prevState) => {
@@ -95,40 +76,21 @@ class Land extends Component {
     //     // return true;
     // }
 
-    componentDidUpdate = () => {
-        this.draw_land();
-    }
 
-    change_game_set = () => {
-        this.setState({
-            totalMineCount: this.state.mineCountCategory[this.state.curGameLevel],
-            // curGameLevel: this.state.curGameLevel,
-            landSize: this.state.landSizeCategory[this.state.curGameLevel],
-            lineLength: this.state.lineLengthCategory[this.state.curGameLevel],
-            horizontalLength: this.state.horizontalLengthCategory[this.state.curGameLevel],
-            verticalLength: this.state.verticalLengthCategory[this.state.curGameLevel],
-            cellsId: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).keys()],
-        });
-    }
 
     // Game over
-    checkGameOver = (e) => {
+    f_checkGameOver = (e) => {
         console.log(e);
     }
 
 
-    
-    rendercells = (e) => {
-
-    }
-
     // Todo: Auto landSize set by game level // Done
     // Todo: Generate entire cell array
 
-    generateMine = (e) => {
-        
+    f_generateMine = (e) => {
+
         if(this.state.isGenerateMine)
-            return;        
+            return;
         
         const landSize = this.state.landSize;
         const totalMineCount = this.state.totalMineCount;
@@ -181,7 +143,7 @@ class Land extends Component {
     }
 
 
-    generatecells = (e) => {
+    f_generatecells = (e) => {
         const cells = this.state.cellTypeArray;
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
@@ -189,28 +151,28 @@ class Land extends Component {
         const firstcell = cells[0];
     }
 
-    
-    btnClickedStart = (e) => {
+    f_resetGame = () => {
         const selectedLevelOption = document.getElementById('startSelect').options[document.getElementById('startSelect').selectedIndex].value;
-
-        console.log('btn : '+ selectedLevelOption);
-        //console.log('Btn clicked : '+selectedLevelOption);
         this.setState({
             curGameLevel: selectedLevelOption,
+            isGenerateMine: false,
         })
-
-        this.init_game_setting();
-        // this.game_landing();
-        console.log('btnclickedstart');
+    }
+    
+    f_btnClickedStart = (e) => {
+        this.f_resetGame();
+        this.f_init_game_setting();
     }
 
     componentDidMount = () => {
-        this.init_game_setting();
+        this.f_init_game_setting();
     }
+
     componentWillUnmount = () => {
     }
+
     componentDidUpdate = () => {
-        this.draw_land();
+        this.f_drawLand();
     }
     
     render() {
@@ -226,56 +188,56 @@ class Land extends Component {
                         if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
-                                <div key={index} className='wcell wcell-corner-01' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-corner-01' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
-                            <div key={index} className='wcell wcell-corner-04' id={index} onClick={this.generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                            <div key={index} className='wcell wcell-corner-04' id={index} onClick={this.f_generateMine}>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div> 
                             )
                         } else if (index === horizontalLength -1) {
                             return (
-                                <div key={index} className='wcell wcell-corner-02' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-corner-02' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize - horizontalLength)) {
                         return (
-                            <div key={index} className='wcell wcell-corner-03' id={index} onClick={this.generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                            <div key={index} className='wcell wcell-corner-03' id={index} onClick={this.f_generateMine}>
+                                <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div>
                             )
                         } else if (index < horizontalLength) {
                             return (
-                                <div key={index} className='wcell wcell-side-01' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-01' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if ((index % horizontalLength) === 0) {
                             return (
-                                <div key={index} className='wcell wcell-side-04' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-04' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if((index % horizontalLength) === (horizontalLength - 1)) {
                             return (
-                                <div key={index} className='wcell wcell-side-02' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-02' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if(index > landSize - horizontalLength) {
                             return (
-                                <div key={index} className='wcell wcell-side-03' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-03' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else {
                             return (
-                                <div key={index} className='wcell wcell-md-01' id={index} onClick={this.generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-md-01' id={index} onClick={this.f_generateMine}>
+                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         }
@@ -288,7 +250,7 @@ class Land extends Component {
                         <option value="1">Normal</option>
                         <option value="2">Hard</option>
                     </select>
-                    <button className='button-start' onClick={this.btnClickedStart}>Start game</button>
+                    <button className='button-start' onClick={this.f_btnClickedStart}>Start game</button>
                     {/* <button onClick={this.gameOptionSet}>Game start</button> */}
                 </div>
             </>

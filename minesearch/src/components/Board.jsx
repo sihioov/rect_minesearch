@@ -33,12 +33,10 @@ class Board extends Component {
 
     setLandVerticalLength = (data) => {
         if (data !== this.state.landVerticalLength) {
-            console.log('Change vertical : '+data);
             this.setState({
                 landVerticalLength: data,
             })
         } else {
-            console.log('Not change vertical');
         }
 
         var wrapperSelect = document.getElementById('wrapperSelect');
