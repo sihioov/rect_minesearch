@@ -31,7 +31,8 @@ class Land extends Component {
             verticalLengthCategory:[9, 16, 16],
             verticalLength: '',
             cellTypeArray: [],
-            defaultCellSize: 4.4,
+            defaultCellSize: 22,
+            sideWidth: 2,
         }
     }
 
@@ -47,14 +48,17 @@ class Land extends Component {
         })
 
         var land = document.getElementsByClassName('land')[0];
-
-        const defaultCellSize = this.state.defaultCellSize;
+        // const cell = document.getElementsByClassName('wcell')[0].clientHeight;
+        // const cellHeight = cell.clientHeight;
+        // var a = 3;
+        // console.log(`heigth : ${a}`)
+        const defaultCellSize  = this.state.defaultCellSize;
         const horizontalLength = this.state.horizontalLengthCategory[this.state.curLevel];
-        const verticalLength = this.state.verticalLengthCategory[this.state.curLevel];
-        
-        
-        land.style.width = defaultCellSize*horizontalLength+'px';
-        land.style.height = defaultCellSize*verticalLength+'px';
+        const verticalLength   = this.state.verticalLengthCategory[this.state.curLevel];
+        const sideWidth      = this.state.sideWidth;
+        // During rendering, auto set landsize
+        land.style.width  = defaultCellSize * horizontalLength + sideWidth +'px';
+        land.style.height = defaultCellSize * verticalLength + sideWidth + 'px';
     }
 
     // Game over
@@ -167,55 +171,55 @@ class Land extends Component {
                         if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
-                                <div key={index} className='top-left-corner' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-corner-01' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
-                            <div key={index} className='bottom-right-corner' id={index} onClick={this.generateMine}>
+                            <div key={index} className='wcell wcell-corner-04' id={index} onClick={this.generateMine}>
                                 <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div> 
                             )
                         } else if (index === horizontalLength -1) {
                             return (
-                                <div key={index} className='top-right-corner' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-corner-02' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize - horizontalLength)) {
                         return (
-                            <div key={index} className='bottom-left-corner' id={index} onClick={this.generateMine}>
+                            <div key={index} className='wcell wcell-corner-03' id={index} onClick={this.generateMine}>
                                 <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                             </div>
                             )
                         } else if (index < horizontalLength) {
                             return (
-                                <div key={index} className='top-side' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-side-01' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if ((index % horizontalLength) === 0) {
                             return (
-                                <div key={index} className='left-side' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-side-04' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if((index % horizontalLength) === (horizontalLength - 1)) {
                             return (
-                                <div key={index} className='right-side' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-side-02' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if(index > landSize - horizontalLength) {
                             return (
-                                <div key={index} className='bottom-side' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-side-03' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else {
                             return (
-                                <div key={index} className='center-cell' id={index} onClick={this.generateMine}>
+                                <div key={index} className='wcell wcell-md-01' id={index} onClick={this.generateMine}>
                                     <Cell id={value} func={this.checkGameOver} onClick={this.generateMine} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )

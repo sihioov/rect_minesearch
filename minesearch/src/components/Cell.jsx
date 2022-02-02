@@ -150,7 +150,7 @@ class Cell extends Component {
 
     render() {
         //const elements = ['1', '2', '3', '4', '5'];
-        console.log(this.props.level);
+        // console.log(this.props.level);
         return (
             <>
                 <div className='cell'/>

@@ -1,0 +1,36 @@
+
+/* .select-level {
+    
+    width: 5.5em;
+    
+    font-family: inherit;  
+    border: 1px solid #999;
+    margin: 3px;
+    font-size: 1px;
+    -webkit-appearance: none;
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+
+
+}
+
+.select-level option {
+    
+} */
+
+.select-level {
+    width: 20px;
+    height: 10px;
+    
+    background-size: 20px;
+    padding: 5px 30px 5px 10px;
+    border-radius: 4px;
+    outline: 0 none;
+    font-size: 18px;
+  }
+  .select-level option {
+    background: black;
+    color: #fff;
+    padding: 3px 0;
+    font-size: 5px;
+  }
