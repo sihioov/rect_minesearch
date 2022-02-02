@@ -18,19 +18,34 @@
     
 } */
 
+#wrapperSelect {
+    width: 200px;
+    position: absolute;
+    display: inline-block;
+    align-items: center;
+
+}
+
 .select-level {
-    width: 20px;
-    height: 10px;
-    
-    background-size: 20px;
-    padding: 5px 30px 5px 10px;
+    width: auto;
+    height: auto;
+    position: relative;
+    top: 10px;
+    /* background-size: 20px; */
+    /* padding: 5px 30px 5px 10px; */
     border-radius: 4px;
-    outline: 0 none;
-    font-size: 18px;
-  }
-  .select-level option {
-    background: black;
-    color: #fff;
-    padding: 3px 0;
-    font-size: 5px;
-  }
+    /* outline: 0 none; */
+    font-size: 13px;
+}
+
+.button-start {
+    width: auto;
+    height: auto;
+    position: relative;
+    border-radius: 4px;
+    top: 10px;
+    float: right;
+}
+
+.select-level option {
+}

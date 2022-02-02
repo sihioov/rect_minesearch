@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 // import cell from './cell';
 import Cell from './Cell';
 
@@ -9,15 +9,16 @@ import '../css/land.css'
 class Land extends Component {
     
     static a = ['asd', 'zxc'];
-
+    
     constructor(props) {
         super(props);
-
+        
         // Add modeCategory state
+        
         this.state = {
-            count: '20',
+            // count: '20',
             cellsId: [], // Todo: Auto set cells by level
-            curLevel: this.props.curLevel,
+            curGameLevel: 0,
             totalMineCount: 0,
             mineCountCategory: [10,40,99],
             initCell: '',
@@ -31,34 +32,83 @@ class Land extends Component {
             verticalLengthCategory:[9, 16, 16],
             verticalLength: '',
             cellTypeArray: [],
-            defaultCellSize: 22,
-            sideWidth: 2,
+            defaultCellSize: 20 + 1 + 1,    // 20px + 1px(border) + 1px(border)
+            sideWidth: 2,                   // 1px(side px) + 1px(another side px)
         }
     }
 
+    
+    // reinit_game = () => {
+    //     this.props.reinit_game(this.state.curGameLevel);
+    //     // this.setState({
+    //     //     curGameLevel: this.state.curGameLevel,
+    //     // })
+    // }
     // Initial game setting
+    // test = (props) => {
+        
+    //     this.setState((props) => {
+    //         return {curGameLevel: props.curGameLevel};
+    //     });
+    // }
+    
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     if (nextProps.curGameLevel !== prevState.curGameLevel) {
+    //         return { curGameLevel: nextProps.curGameLevel };
+    //     }
+    //     return null;   
+    // }
+
     init_game_setting = () => {
-        this.setState({
-            totalMineCount: this.state.mineCountCategory[this.state.curLevel],
-            landSize: this.state.landSizeCategory[this.state.curLevel],
-            lineLength: this.state.lineLengthCategory[this.state.curLevel],
-            horizontalLength: this.state.horizontalLengthCategory[this.state.curLevel],
-            verticalLength: this.state.verticalLengthCategory[this.state.curLevel],
-            cellsId: [...Array(this.state.landSizeCategory[this.state.curLevel]).keys()],
+
+        this.setState((props) => {
+            return {
+            curGameLevel: props.curGameLevel,
+            totalMineCount: this.state.mineCountCategory[props.curGameLevel],
+            landSize: this.state.landSizeCategory[props.curGameLevel],
+            lineLength: this.state.lineLengthCategory[props.curGameLevel],
+            horizontalLength: this.state.horizontalLengthCategory[props.curGameLevel],
+            verticalLength: this.state.verticalLengthCategory[props.curGameLevel],
+            cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()]
+            };
         })
+    }
+
+    draw_land = () => {
 
         var land = document.getElementsByClassName('land')[0];
-        // const cell = document.getElementsByClassName('wcell')[0].clientHeight;
-        // const cellHeight = cell.clientHeight;
-        // var a = 3;
-        // console.log(`heigth : ${a}`)
         const defaultCellSize  = this.state.defaultCellSize;
-        const horizontalLength = this.state.horizontalLengthCategory[this.state.curLevel];
-        const verticalLength   = this.state.verticalLengthCategory[this.state.curLevel];
+        const horizontalLength = this.state.horizontalLengthCategory[this.state.curGameLevel];
+        const verticalLength   = this.state.verticalLengthCategory[this.state.curGameLevel];
         const sideWidth      = this.state.sideWidth;
+        
         // During rendering, auto set landsize
         land.style.width  = defaultCellSize * horizontalLength + sideWidth +'px';
         land.style.height = defaultCellSize * verticalLength + sideWidth + 'px';
+
+        // Send data to Board component
+        this.props.setLandVerticalLength(land.style.width);
+    }
+
+    // shouldComponentUpdate = (prevProps, prevState) => {
+    //     return this.props.curGameLevel !== prevProps.curGameLevel;
+    //     // return true;
+    // }
+
+    componentDidUpdate = () => {
+        this.draw_land();
+    }
+
+    change_game_set = () => {
+        this.setState({
+            totalMineCount: this.state.mineCountCategory[this.state.curGameLevel],
+            // curGameLevel: this.state.curGameLevel,
+            landSize: this.state.landSizeCategory[this.state.curGameLevel],
+            lineLength: this.state.lineLengthCategory[this.state.curGameLevel],
+            horizontalLength: this.state.horizontalLengthCategory[this.state.curGameLevel],
+            verticalLength: this.state.verticalLengthCategory[this.state.curGameLevel],
+            cellsId: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).keys()],
+        });
     }
 
     // Game over
@@ -72,7 +122,7 @@ class Land extends Component {
 
     }
 
-    // Todo: Auto landSize set by gmae level
+    // Todo: Auto landSize set by game level // Done
     // Todo: Generate entire cell array
 
     generateMine = (e) => {
@@ -99,16 +149,14 @@ class Land extends Component {
 
             standNum = leftMineCount/leftCells;
             random = Math.random(99);
-            console.log(`index: ${i+1}, left cell: ${leftCells}, left mine: ${leftMineCount}`)
-            // console.log('index : '+(i+1)+','+`left cell ${random}`);
 
-            // console.log('left cell : '+leftcells);
-            // console.log('left mine '+leftMineCount);
-            console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
-            console.log('');
+            // Print ratio
+            // console.log(`index: ${i+1}, left cell: ${leftCells}, left mine: ${leftMineCount}`)
+            // console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
+            // console.log('');
 
             // 
-            if (standNum == 0) {
+            if (standNum === 0) {
                 cells.fill(0, i);
                 break;
             }
@@ -138,32 +186,39 @@ class Land extends Component {
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
 
-        // 
         const firstcell = cells[0];
-        // const topcell
-        
-        
-        // for (var i = 0; i<)
-        // const topcells = cells[]
     }
 
-    // plantMine = (e) => {
+    
+    btnClickedStart = (e) => {
+        const selectedLevelOption = document.getElementById('startSelect').options[document.getElementById('startSelect').selectedIndex].value;
 
-    // }
+        console.log('btn : '+ selectedLevelOption);
+        //console.log('Btn clicked : '+selectedLevelOption);
+        this.setState({
+            curGameLevel: selectedLevelOption,
+        })
+
+        this.init_game_setting();
+        // this.game_landing();
+        console.log('btnclickedstart');
+    }
 
     componentDidMount = () => {
-
-        // Game setting        
         this.init_game_setting();
-        //tempArray.from(Array(this.state.landSize).keys())
     }
-
+    componentWillUnmount = () => {
+    }
+    componentDidUpdate = () => {
+        this.draw_land();
+    }
+    
     render() {
+        
         const horizontalLength = this.state.horizontalLength; 
         const landSize = this.state.landSize;
+        
 
-        // console.log(`수평의(horizontal) : `+horizontalLength);
-        // console.log(`세로의(vertical)) : `+verticalLength);
         return (
             <>
                 <div className='land' id='land' >
@@ -226,6 +281,15 @@ class Land extends Component {
                         }
                         
                     })}
+                </div>
+                <div id="wrapperSelect">
+                    <select className='select-level' id="startSelect" >
+                        <option value="0">Easy</option>
+                        <option value="1">Normal</option>
+                        <option value="2">Hard</option>
+                    </select>
+                    <button className='button-start' onClick={this.btnClickedStart}>Start game</button>
+                    {/* <button onClick={this.gameOptionSet}>Game start</button> */}
                 </div>
             </>
         )

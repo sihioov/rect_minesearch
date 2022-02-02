@@ -1,24 +1,24 @@
-import React, { Component, useRef } from 'react';
+import React, { Component, useState } from 'react';
 import '../css/board.css'
 import Land from './Land';
 
 class Board extends Component {
 
-    
-   
 
     constructor(props) {
         // Easy: 0, Medium: 1, Hard: 2
-        const GameLevel = [0,1,2]
+        const GameLevel = [0,1,2];
+
         super(props);
-        this.board = React.createRef();
+        // this.board = React.createRef();
         this.state = {
-            curLevel: GameLevel[1],
+            curGameLevel: 0,
+            landVerticalLength: 100,
+            rerender: 0,
         };
     }
 
     // Todo: Level set form
-    
     componentDidMount = (e) => {
         var a = document.getElementsByClassName('zxc');
         
@@ -31,33 +31,49 @@ class Board extends Component {
         console.log('test');
     }
 
-    gameOptionSet = (e) => {
-        console.log('djaskdasd');
+    setLandVerticalLength = (data) => {
+        if (data !== this.state.landVerticalLength) {
+            console.log('Change vertical : '+data);
+            this.setState({
+                landVerticalLength: data,
+            })
+        } else {
+            console.log('Not change vertical');
+        }
+
+        var wrapperSelect = document.getElementById('wrapperSelect');
+        wrapperSelect.style.width = data;
     }
 
+    gameOptionSet = (data) => {
+        
+        // } else {
+        //     console.log('Not change vertical');
+        // }
+    }
+
+    
+
+    // onRecv = (data) => {
+    //     if (data !== this.state.landVerticalLength) {
+    //         console.log('Change vertical');
+    //         this.setState({
+    //             landVerticalLength: data,
+    //         })
+    //     }
+    // }
+    
     render() {
+        console.log('Board rendering!');
         const styles = {
-            fontSize: 1,
-            color: 'blue'
+            fontSize: '10pt',
         }
         const styles2 = {
             fontSize: 9,
         }
         return (
             <>
-                <div className='asd' ><Land curLevel={this.state.curLevel}/></div>
-                <div>
-                    <select className='select-level' style={styles}>
-                        asd
-                        <option value="#" style={styles}>Select level</option>
-                        <option value="#">Easy</option>
-                        <option value="#">Normal</option>
-                        <option value="#">Hard</option>
-                    </select>
-                    <button style={styles2}>asdasd</button>
-                    {/* <button onClick={this.gameOptionSet}>Game start</button> */}
-                </div>
-                
+                <Land curGameLevel={this.state.curGameLevel} setLandVerticalLength={this.setLandVerticalLength}/>
             </>
         );
     }

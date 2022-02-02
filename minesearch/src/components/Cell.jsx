@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, Component } from 'react';
 import '../css/cell.css';
 import mine from '../resources/mine.png';
 // import asset from '../resources/';
