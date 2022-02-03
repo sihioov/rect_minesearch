@@ -22,7 +22,7 @@ class Land extends Component {
             totalMineCount: 0,
             mineCountCategory: [10,40,99],
             initCell: '',
-            isGenerateMine: false,
+            isGenerateCells: false,
             landSize: '',
             landSizeCategory: [9*9, 16*16, 30*16],
             lineLengthCategory: [9, 16, 16],
@@ -89,16 +89,22 @@ class Land extends Component {
 
     f_generateMine = (e) => {
 
-        if(this.state.isGenerateMine)
+        if(this.state.isGenerateCells)
             return;
         
         const landSize = this.state.landSize;
         const totalMineCount = this.state.totalMineCount;
 
         const cells = new Array(landSize);
+
+        const selectedCellNum = this.f_getCellNumber(e.target.id);
+
+        console.log('selectedNum : '+selectedCellNum);
         var leftMineCount = totalMineCount;
-        var leftCells = landSize;
-        console.log('Generate : '+landSize);
+        var leftCells = landSize - 1; // Exclude selected cell
+
+        console.log('Generate : ' + landSize);
+
         const test = ['asd', 'zxc', 'qwe']
         // Probability
         // Todo: Complete array gen
@@ -107,7 +113,12 @@ class Land extends Component {
         var maxSize = 10; // state
         var count = 0;
 
+        cells[selectedCellNum] = 0;
+
         for (var i = 0; i < landSize; i++) {
+
+            if (i == selectedCellNum)
+                continue;
 
             standNum = leftMineCount/leftCells;
             random = Math.random(99);
@@ -117,7 +128,6 @@ class Land extends Component {
             // console.log('Mine Probability : ' + (standNum*100).toFixed(1) +'%');
             // console.log('');
 
-            // 
             if (standNum === 0) {
                 cells.fill(0, i);
                 break;
@@ -129,40 +139,220 @@ class Land extends Component {
                 leftMineCount--;
             } else {                    // Not mine
                 cells[i] = 0;
-                // cells.push('0');
                 leftCells--;
             } 
         }
         console.log(cells);
 
-
         this.setState({
             cellTypeArray: cells,
-            isGenerateMine: true,
         })
     }
 
 
-    f_generatecells = (e) => {
-        const cells = this.state.cellTypeArray;
+    f_generateCells = (e) => {
+        
+        console.log('generateCells');
+        var cells = this.state.cellTypeArray;
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
 
-        const firstcell = cells[0];
+        //const wrapperCellId = e.target.id;
+        const virtualCells = cells;
+        
+        for (var cellNumber in cells) {
+            const isMineSelectedCell = this.f_isMineCell(cellNumber);
+            // if (isMineSelectedCell)
+            //     console.log('isMineIndex : '+cellNumber);
+            if (isMineSelectedCell) {
+                this.f_setCellTypeMineAround(parseInt(cellNumber), virtualCells);
+            }
+        }
+        
+        //virtualCells[300] = 0;
+        // console.log('virtualCells : '+virtualCells);
+        this.setState({
+            cellTypeArray: virtualCells,
+        })
+    }
+
+    f_isMineCell = (cellNumber) => {
+        //const cells = 
+        //const cellId = this.f_getCellNumber(wrapperCellId);
+        // console.log(cellNumber);
+        // if (this.state.cellTypeArray[cellNumber] === "mine")
+        //     console.log('isMineIndex : '+cellNumber);
+
+        const ret = (this.state.cellTypeArray[cellNumber] === "mine");
+
+        return ret;
+    }
+
+    f_setCellTypeMineAround = (cellNumber, virtualCells) => {
+        // console.log('cellNumber : '+cellNumber);
+        const newLineSize = this.state.verticalLength;
+        // cellNumber - 1 left
+        // cellNumber + 1 right
+        // cellNumber - this.state.verticalLength top
+        // cellNumber - this.state.verticalLength - 1 top left
+        // cellNumber - this.state.verticalLength + 1 top right
+        // cellNumber + this.state.verticalLength bottom
+        // cellNumber + this.state.verticalLength - 1 bottom left
+        // cellNumber + this.state.verticalLength + 1 bottom right
+        
+        const leftCell = cellNumber - 1;
+        const rightCell = cellNumber + 1;
+        const topCell = cellNumber - newLineSize;
+        const topLeftCell = cellNumber - newLineSize - 1;
+        const topRightCell = cellNumber - newLineSize + 1;
+        const bottomCell = cellNumber + newLineSize;
+        const bottomLeftCell = cellNumber + newLineSize - 1;
+        const bottomRightCell = cellNumber + newLineSize + 1;
+        const virtualCellsLength = this.state.landSize;
+        // if (0<=leftCell<=virtualCells.length-1)
+        //     virtualCells[leftCell] +=1;
+        
+        const cellShape = this.f_getCellShape(cellNumber);
+        console.log('cellShape : '+cellNumber);
+        //virtualCells[rightCell] += 1;
+        switch (cellShape)
+        {
+            case "leftTopCorner":
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                break;
+            case "rightTopCorner":
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                break;
+            case "rightBottomCorner":
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                break;
+            case "leftBottomCorner":
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                break;
+            case "topSide":
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                break;
+            case "rightSide":
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                break;
+            case "bottomSide":
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                break;
+            case "leftSide":
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                break;
+            case "centerCell":
+                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                break;
+            default:
+                break;
+
+        }
+        // console.log(virtualCells);
+        // virtualCells[leftCell] = (virtualCells[leftCell] !== "mine") ? virtualCells[leftCell] +=1 : virtualCells[leftCell];
+        // virtualCells[rightCell] = (virtualCells[rightCell] !== "mine") ? virtualCells[rightCell] +=1 : virtualCells[rightCell];
+        // virtualCells[topCell] = (virtualCells[topCell] !== "mine") ? virtualCells[topCell] +=1 : virtualCells[topCell];
+        // virtualCells[bottomCell] = (virtualCells[bottomCell] !== "mine") ? virtualCells[bottomCell] +=1 : virtualCells[bottomCell];
+        // virtualCells[topLeftCell] = (virtualCells[topLeftCell] !== "mine") ? virtualCells[topLeftCell] +=1 : virtualCells[topLeftCell];
+        // virtualCells[topRightCell] = (virtualCells[topRightCell] !== "mine") ? virtualCells[topRightCell] +=1 : virtualCells[topRightCell];
+        // virtualCells[bottomLeftCell] = (virtualCells[bottomLeftCell] !== "mine") ? virtualCells[bottomLeftCell] +=1 : virtualCells[bottomLeftCell];
+        // virtualCells[bottomRightCell] = (virtualCells[bottomRightCell] !== "mine") ? virtualCells[bottomRightCell] +=1 : virtualCells[bottomRightCell];
+        
+        //var isBoundary = virtualCells[left] != ? virtualCells[left] +=1 : "";
+        //((virtualCells[left] != "") virtualCells[left] += 1 ? )
+            
+        // virtualCells[cellNumber - 1]                += 1;
+        // virtualCells[cellNumber + 1]                += 1;
+        // virtualCells[cellNumber - newLineSize]      += 1;
+        // virtualCells[cellNumber - newLineSize + 1]  += 1;
+        // virtualCells[cellNumber - newLineSize - 1]  += 1;
+        // virtualCells[cellNumber + newLineSize]      += 1;
+        // virtualCells[cellNumber + newLineSize + 1]  += 1;
+        // virtualCells[cellNumber + newLineSize - 1]  += 1;
+        // this.setState({ 
+            
+        // })
+        
+        //cell[cellNumber-1] += 1;
+    }
+
+    f_getCellShape = (cellNumber) => {
+        const horizontalLength = this.state.horizontalLength;
+        const landSize = this.state.landSize;
+        if (cellNumber == 0)
+            return "leftTopCorner";
+        else if (cellNumber === (horizontalLength - 1))
+            return "rightTopCorner";
+        else if (cellNumber === (landSize - 1))
+            return "rightBottomCorner";
+        else if (cellNumber === (landSize - horizontalLength))
+            return "leftBottomCorner";
+        else if (cellNumber < horizontalLength)
+            return "topSide";
+        else if ((cellNumber % horizontalLength) === (horizontalLength - 1))
+            return "rightSide";
+        else if (cellNumber > (landSize - horizontalLength)) 
+            return "bottomSide";
+        else if ((cellNumber % horizontalLength) === 0)
+            return "leftSide";
+        else
+            return "centerCell";
+    }
+
+    f_isScopeIndex = (index) => {
+        return (0<=index<this.state.landSize);
+    }
+    f_getCellNumber = (cellId) => {
+        const cellNumber = cellId.split('_')[1];
+
+        return cellNumber;
     }
 
     f_resetGame = () => {
-        const selectedLevelOption = document.getElementById('startSelect').options[document.getElementById('startSelect').selectedIndex].value;
+        const selectedLevelOption = document.getElementById('startSelect').
+        options[document.getElementById('startSelect').selectedIndex].value;
+        
         this.setState({
             curGameLevel: selectedLevelOption,
-            isGenerateMine: false,
+            isGenerateCells: false,
         })
     }
     
-    f_btnClickedStart = (e) => {
+    f_btnClickedGameStart = (e) => {
         this.f_resetGame();
         this.f_init_game_setting();
     }
+
+    f_btnClickedCell = async (e) => {
+
+        if (this.state.isGenerateCells) {
+
+        } else {    // First click
+            await this.f_generateMine(e);
+            await this.f_generateCells(e);
+        }
+        
+        this.setState({
+            isGenerateCells: true,
+        })
+    }
+
+    
 
     componentDidMount = () => {
         this.f_init_game_setting();
@@ -188,56 +378,56 @@ class Land extends Component {
                         if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
-                                <div key={index} className='wcell wcell-corner-01' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-corner-01' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell} >
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
-                            <div key={index} className='wcell wcell-corner-04' id={index} onClick={this.f_generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                            <div key={index} className='wcell wcell-corner-04' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                             </div> 
                             )
                         } else if (index === horizontalLength -1) {
                             return (
-                                <div key={index} className='wcell wcell-corner-02' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-corner-02' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if (index === (landSize - horizontalLength)) {
                         return (
-                            <div key={index} className='wcell wcell-corner-03' id={index} onClick={this.f_generateMine}>
-                                <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                            <div key={index} className='wcell wcell-corner-03' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                             </div>
                             )
                         } else if (index < horizontalLength) {
                             return (
-                                <div key={index} className='wcell wcell-side-01' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-01' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if ((index % horizontalLength) === 0) {
                             return (
-                                <div key={index} className='wcell wcell-side-04' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-04' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else if((index % horizontalLength) === (horizontalLength - 1)) {
                             return (
-                                <div key={index} className='wcell wcell-side-02' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-02' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
-                        } else if(index > landSize - horizontalLength) {
+                        } else if(index > (landSize - horizontalLength)) {
                             return (
-                                <div key={index} className='wcell wcell-side-03' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-side-03' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         } else {
                             return (
-                                <div key={index} className='wcell wcell-md-01' id={index} onClick={this.f_generateMine}>
-                                    <Cell id={value} func={this.checkGameOver} onClick={this.f_generateMine} cellType={this.state.cellTypeArray[index]}/>
+                                <div key={index} className='wcell wcell-md-01' id={"wrapperCell_"+index} onClick={this.f_btnClickedCell}>
+                                    {this.state.cellTypeArray[index]}<Cell id={"cell_"+index} func={this.checkGameOver} cellType={this.state.cellTypeArray[index]}/>
                                 </div>
                             )
                         }
@@ -250,7 +440,7 @@ class Land extends Component {
                         <option value="1">Normal</option>
                         <option value="2">Hard</option>
                     </select>
-                    <button className='button-start' onClick={this.f_btnClickedStart}>Start game</button>
+                    <button className='button-start' onClick={this.f_btnClickedGameStart}>Start game</button>
                     {/* <button onClick={this.gameOptionSet}>Game start</button> */}
                 </div>
             </>
