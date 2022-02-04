@@ -5,15 +5,17 @@
 .wcell {
     height: 20px;
     width: 20px;
-    background-color: white;
+    background-color: grey;
     border-width: 1px;
     align-items: center;
     float: left;
+    text-align: center;
 }
 
 .wcell-md-01 {
     border-style: solid;
     border-color: green;
+    border-color: black;
 }
 
 /* Top side */
@@ -21,6 +23,7 @@
     border-style: solid;
     border-color: aqua;
     border-top-width: 2px;
+    border-color: black;
 }
 
 /* Right side */
@@ -28,6 +31,7 @@
     border-style: solid;
     border-color: gold;
     border-right-width: 2px;
+    border-color: black;
 }
 
 /* Bottom side */
@@ -35,6 +39,7 @@
     border-style: solid;
     border-color: palevioletred;
     border-bottom-width: 2px;
+    border-color: black;
 }
 
 /* Left side */
@@ -42,6 +47,7 @@
     border-style: solid;
     border-color: red;
     border-left-width: 2px;
+    border-color: black;
 }
 
 .wcell-corner-01 {
