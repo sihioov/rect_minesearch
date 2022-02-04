@@ -70,7 +70,7 @@ class Board extends Component {
             fontSize: 9,
         }
         return (
-            <>
+            <>  
                 <Land curGameLevel={this.state.curGameLevel} setLandVerticalLength={this.setLandVerticalLength}/>
             </>
         );

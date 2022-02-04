@@ -9,7 +9,7 @@ import '../css/land.css'
 class Land extends Component {
     
     static a = ['asd', 'zxc'];
-    
+    mine = '💣';
     constructor(props) {
         super(props);
         
@@ -134,7 +134,7 @@ class Land extends Component {
             }
 
             if (random <= standNum) {   // Mine
-                cells[i] = 'mine';
+                cells[i] = this.mine;
                 leftCells--;
                 leftMineCount--;
             } else {                    // Not mine
@@ -180,10 +180,10 @@ class Land extends Component {
         //const cells = 
         //const cellId = this.f_getCellNumber(wrapperCellId);
         // console.log(cellNumber);
-        // if (this.state.cellTypeArray[cellNumber] === "mine")
+        // if (this.state.cellTypeArray[cellNumber] === this.mine)
         //     console.log('isMineIndex : '+cellNumber);
 
-        const ret = (this.state.cellTypeArray[cellNumber] === "mine");
+        const ret = (this.state.cellTypeArray[cellNumber] === this.mine);
 
         return ret;
     }
@@ -218,60 +218,60 @@ class Land extends Component {
         switch (cellShape)
         {
             case "leftTopCorner":
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
                 break;
             case "rightTopCorner":
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
                 break;
             case "rightBottomCorner":
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
                 break;
             case "leftBottomCorner":
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
                 break;
             case "topSide":
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
                 break;
             case "rightSide":
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
                 break;
             case "bottomSide":
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
                 break;
             case "leftSide":
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
                 break;
             case "centerCell":
-                virtualCells[topCell] = (virtualCells[topCell] !== 'mine') ? virtualCells[topCell] +=1 : 0;
-                virtualCells[rightCell] = (virtualCells[rightCell] !== 'mine') ? virtualCells[rightCell] +=1 : 0;
-                virtualCells[bottomCell] = (virtualCells[bottomCell] !== 'mine') ? virtualCells[bottomCell] +=1 : 0;
-                virtualCells[leftCell] = (virtualCells[leftCell] !== 'mine') ? virtualCells[leftCell] +=1 : 0;
+                virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : 0;
+                virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : 0;
+                virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : 0;
+                virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : 0;
                 break;
             default:
                 break;
 
         }
         // console.log(virtualCells);
-        // virtualCells[leftCell] = (virtualCells[leftCell] !== "mine") ? virtualCells[leftCell] +=1 : virtualCells[leftCell];
-        // virtualCells[rightCell] = (virtualCells[rightCell] !== "mine") ? virtualCells[rightCell] +=1 : virtualCells[rightCell];
-        // virtualCells[topCell] = (virtualCells[topCell] !== "mine") ? virtualCells[topCell] +=1 : virtualCells[topCell];
-        // virtualCells[bottomCell] = (virtualCells[bottomCell] !== "mine") ? virtualCells[bottomCell] +=1 : virtualCells[bottomCell];
-        // virtualCells[topLeftCell] = (virtualCells[topLeftCell] !== "mine") ? virtualCells[topLeftCell] +=1 : virtualCells[topLeftCell];
-        // virtualCells[topRightCell] = (virtualCells[topRightCell] !== "mine") ? virtualCells[topRightCell] +=1 : virtualCells[topRightCell];
-        // virtualCells[bottomLeftCell] = (virtualCells[bottomLeftCell] !== "mine") ? virtualCells[bottomLeftCell] +=1 : virtualCells[bottomLeftCell];
-        // virtualCells[bottomRightCell] = (virtualCells[bottomRightCell] !== "mine") ? virtualCells[bottomRightCell] +=1 : virtualCells[bottomRightCell];
+        // virtualCells[leftCell] = (virtualCells[leftCell] !== this.mine) ? virtualCells[leftCell] +=1 : virtualCells[leftCell];
+        // virtualCells[rightCell] = (virtualCells[rightCell] !== this.mine) ? virtualCells[rightCell] +=1 : virtualCells[rightCell];
+        // virtualCells[topCell] = (virtualCells[topCell] !== this.mine) ? virtualCells[topCell] +=1 : virtualCells[topCell];
+        // virtualCells[bottomCell] = (virtualCells[bottomCell] !== this.mine) ? virtualCells[bottomCell] +=1 : virtualCells[bottomCell];
+        // virtualCells[topLeftCell] = (virtualCells[topLeftCell] !== this.mine) ? virtualCells[topLeftCell] +=1 : virtualCells[topLeftCell];
+        // virtualCells[topRightCell] = (virtualCells[topRightCell] !== this.mine) ? virtualCells[topRightCell] +=1 : virtualCells[topRightCell];
+        // virtualCells[bottomLeftCell] = (virtualCells[bottomLeftCell] !== this.mine) ? virtualCells[bottomLeftCell] +=1 : virtualCells[bottomLeftCell];
+        // virtualCells[bottomRightCell] = (virtualCells[bottomRightCell] !== this.mine) ? virtualCells[bottomRightCell] +=1 : virtualCells[bottomRightCell];
         
         //var isBoundary = virtualCells[left] != ? virtualCells[left] +=1 : "";
         //((virtualCells[left] != "") virtualCells[left] += 1 ? )
