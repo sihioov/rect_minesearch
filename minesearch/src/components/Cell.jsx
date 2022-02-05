@@ -10,6 +10,11 @@ class Cell extends Component {
     __className = ['default', 'normal', '1', '2', 'mine'];
     flag = '⛳';
     mine = '💣';
+    // cellStatus = ['correct', 'inCorrect', 'gameOver']
+    cellStatus = {
+        isCorrect: false,
+        isGameOVer: false
+    }
     constructor(props) {
         super(props);
 
@@ -20,6 +25,7 @@ class Cell extends Component {
             surfaceCellType: '',
             innerCellType: this.props.cellType,
             mode: this.props.mode,
+            isCorrect: '',
         }
     }
 
@@ -66,26 +72,25 @@ class Cell extends Component {
         // console.log('Celltyype : '+this.props.cellType);
 
         // if surface is flaged, skip event
-        if (this.state.surfaceCellType === this.flag) {
+        if (this.state.surfaceCellType === this.flag || this.state.mode === 'open') {
+            console.log('return');
             return;
         }
-
-        this.setState({
-            mode: 'open'
-        })
-        //if (this.state.mode === 'mine');
-
-        
+        // console.log('드엉왔어 : '+this.props.cellType)
 
         // GameOver
-        if (this.state.innerCellType == this.mine) {
-            // this.changeImage(e);
-            // console.log('mine');
-            this.gameOver();
-        } else {
-
+        if (this.props.cellType !== this.mine) {
+            // console.log('지롸 아니다 야')
+            this.setState({
+                mode: 'open'
+            })
+            this.f_cellStatusCheck(true, false);
+        } else if (this.props.cellType === this.mine) {
+            this.setState({
+                mode: 'open'
+            })
+            this.f_gameOver();
         }
-        
         // this.changeImage(e);
     }
 
@@ -95,11 +100,23 @@ class Cell extends Component {
         console.log('click Right');
         const mode = this.state.mode;
 
-        if (mode == 'close') {
+        if (this.state.surfaceCellType === '⛳') {
+            console.log('reSet flag');
+            this.setState({
+                surfaceCellType: '',
+            })
+            this.f_cellStatusCheck(false, false);
+            return;
+        }
+
+        if (mode === 'close') {
             this.setState({
                 surfaceCellType: '⛳',
             })
-        } 
+        }
+
+        ((this.state.innerCellType === this.mine) ? this.f_gameOver() : this.f_cellStatusCheck(true, false))
+
         // if (mode === )
         // (mode === 'open') ? this.setState({})
         // this.setState({
@@ -117,13 +134,18 @@ class Cell extends Component {
         e.preventDefault();
     }
 
-
-    gameOver = (e) => {
-        //this.props.func('GameOver!');
-        console.log('Game Over');
+    f_cellStatusCheck = (isCorrect, isGameOver) => {
+        const cellStatus = this.cellStatus;
+        cellStatus.isCorrect = isCorrect;
+        cellStatus.isGameOVer = isGameOver
+        this.props.onCheck(cellStatus);
     }
 
-    
+    f_gameOver = (e) => {
+        //this.props.func('GameOver!');
+        console.log('gameOVer!!!!!!!!');
+        this.f_cellStatusCheck(false, true);
+    }
 
 
     changeFloor = (e) => {
@@ -154,7 +176,7 @@ class Cell extends Component {
             switch (e.button) {
                 // left click
                 case 0:
-                    console.log('Click left btn : ' + e.target.id);
+                    // console.log('Click left btn : ' + e.target.id);
                     this.setState({
                         curImg: this.__img[0],
                     })
@@ -180,14 +202,14 @@ class Cell extends Component {
         // console.log('asdasd')
         // e.preventDefault();
         if (typeof e == 'object') {
-            console.log('e : '+e.button);
+            // console.log('e : '+e.button);
             switch (e.button) {
                 // left click
                 case 0:
                     this.f_clickedLeftBtn(e);
                     break;
                 case 1:
-                    console.log('Click middle btn');
+                    // console.log('Click middle btn');
                     break;
                 // right click
                 case 2:
@@ -195,12 +217,17 @@ class Cell extends Component {
                     this.f_clickedRightBtn(e);
                     break;
                 default:
-                    console.log('Unknown btn');
+                    // console.log('Unknown btn');
                     break;
             }
         }
-
         
+        // this.props.onCheck(this.f_isCellCorrect);
+        
+    }
+
+    f_isCellCorrect = () => {
+        return this.state.isCorrect;
     }
 
     // close
