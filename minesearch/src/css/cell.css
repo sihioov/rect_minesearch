@@ -34,8 +34,8 @@
 }
 
 .cell {
-    width: 4px;
-    height: 4px;
+    width: 20px;
+    height: 20px;
     /* margin: 0 auto; */
     display: inline-block;
     /* align-items: center; */
@@ -43,7 +43,7 @@
     /* height: 4px; */
     /* width: 3px;
     height: 3px; */
-    position: absolute;
+    /* position: absolute; */
     /* border: 1; */
     /* position: relative; */
     /* padding: 0; */
@@ -56,10 +56,10 @@
     /* background-color: blue; */
 }
 
-.cell:hover {
+/* .cell:hover {
     width: 10px;
     height: 10px;
-}
+} */
 
 .btn {
     width: 4px;

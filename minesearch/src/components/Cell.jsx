@@ -8,7 +8,8 @@ class Cell extends Component {
 
     __img = ['default', 'normal', '1', '2', 'mine'];
     __className = ['default', 'normal', '1', '2', 'mine'];
-
+    flag = '⛳';
+    mine = '💣';
     constructor(props) {
         super(props);
 
@@ -16,7 +17,8 @@ class Cell extends Component {
             cell: this.props.cell,
             curImg: this.__img[0],
             mineNumber: 10,
-            cellType: this.props.cellType,
+            surfaceCellType: '',
+            innerCellType: this.props.cellType,
             mode: this.props.mode,
         }
     }
@@ -30,19 +32,20 @@ class Cell extends Component {
 
     clickedCell = (e) => {
         e.preventDefault();
+        // console.log('Celltyype : '+this.state.cellType);
         if (typeof e === 'object') {
             switch (e.button) {
                 // left click
                 case 0:
-                    this.clickedLeftCell(e);
+                    this.f_clickedLeftBtn(e);
                     break;
                 case 1:
-                    console.log('Click middle btn');
+                    // console.log('Click middle btn');
                     break;
                 // right click
                 case 2:
-                    console.log('Click right btn');
-                    this.clickedRightCell(e);
+                    // console.log('Click right btn');
+                    this.f_clickedRightBtn(e);
                     
                     break;
                 default:
@@ -53,33 +56,56 @@ class Cell extends Component {
     }
 
     selectRelatedCell = (e) => {
-        const cell = e.target.id;
-        console.log('className : '+cell.className);
+        // const cell = e.target.id;
+        // console.log('className : '+cell.className);
     }
 
-    clickedLeftCell = (e) => {
+    f_clickedLeftBtn = (e) => {
         e.preventDefault();
+        // console.log('clicked! leftBtn');
+        // console.log('Celltyype : '+this.props.cellType);
+
+        // if surface is flaged, skip event
+        if (this.state.surfaceCellType === this.flag) {
+            return;
+        }
+
+        this.setState({
+            mode: 'open'
+        })
         //if (this.state.mode === 'mine');
 
         
 
         // GameOver
-        if (this.state.cell === 'mine') {
+        if (this.state.innerCellType == this.mine) {
             // this.changeImage(e);
-            console.log('mine');
+            // console.log('mine');
             this.gameOver();
         } else {
 
         }
         
-        this.changeImage(e);
+        // this.changeImage(e);
     }
 
-    clickedRightCell = (e) => {
+    f_clickedRightBtn = (e) => {
         e.preventDefault();
         //if (this.state.mode === 'mine');
-        
-        this.changeImage(e);
+        console.log('click Right');
+        const mode = this.state.mode;
+
+        if (mode == 'close') {
+            this.setState({
+                surfaceCellType: '⛳',
+            })
+        } 
+        // if (mode === )
+        // (mode === 'open') ? this.setState({})
+        // this.setState({
+        //     mode: 'open'
+        // })
+        // this.changeImage(e);
     }
 
     downedBtnCell = (e) => {
@@ -93,7 +119,8 @@ class Cell extends Component {
 
 
     gameOver = (e) => {
-        this.props.func('GameOver!');
+        //this.props.func('GameOver!');
+        console.log('Game Over');
     }
 
     
@@ -133,11 +160,11 @@ class Cell extends Component {
                     })
                     break;
                 case 1:
-                    console.log('Click middle btn');
+                    // console.log('Click middle btn');
                     break;
                 // right click
                 case 2:
-                    console.log('Click right btn');
+                    // console.log('Click right btn');
                     this.setState({
                         curImg: this.__img[0],
                     })
@@ -150,18 +177,54 @@ class Cell extends Component {
     }
     // Todo: Inner cell click event
     f_clickedBtnCell= (e) => {
+        // console.log('asdasd')
+        // e.preventDefault();
+        if (typeof e == 'object') {
+            console.log('e : '+e.button);
+            switch (e.button) {
+                // left click
+                case 0:
+                    this.f_clickedLeftBtn(e);
+                    break;
+                case 1:
+                    console.log('Click middle btn');
+                    break;
+                // right click
+                case 2:
+                    // console.log('Click right btn');
+                    this.f_clickedRightBtn(e);
+                    break;
+                default:
+                    console.log('Unknown btn');
+                    break;
+            }
+        }
 
+        
     }
+
+    // close
+    f_modeClose = () => {
+        const innerCellType = this.props.cellType;
+        const mode = this.state.mode;
+        return ('')
+        // if (cellType === this.flag) {
+            
+        // }
+    }
+
     render() {
         //const elements = ['1', '2', '3', '4', '5'];
         // console.log(this.props.level);
-        const cellType = this.props.cellType;
+        const innerCellType = this.props.cellType;
+        const surfaceCellType = this.state.surfaceCellType;
         const mode = this.state.mode;
         // console.log('cellType : '+cellType)
         return (
             <>
-                <div className='cell' onClick={this.f_clickedBtnCell}>
-                    {(mode==='open') ? cellType : ''}
+                <div className='cell' onMouseUp={this.f_clickedBtnCell}>
+                    {(mode === 'open') ? innerCellType : surfaceCellType}
+                    {/* {cellType} */}
                 </div>
                 {/* <button className='Cell' /> */}
                 {/* <button className='Cell'/> */}
