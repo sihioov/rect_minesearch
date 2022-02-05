@@ -55,6 +55,12 @@
     background-color: #d3d3d3; */
     /* background-color: blue; */
 }
+
+.cell:hover {
+    width: 10px;
+    height: 10px;
+}
+
 .btn {
     width: 4px;
     height: 4px;

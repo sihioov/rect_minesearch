@@ -16,6 +16,8 @@ class Cell extends Component {
             cell: this.props.cell,
             curImg: this.__img[0],
             mineNumber: 10,
+            cellType: this.props.cellType,
+            mode: this.props.mode,
         }
     }
 
@@ -146,14 +148,21 @@ class Cell extends Component {
             }
         } 
     }
+    // Todo: Inner cell click event
+    f_clickedBtnCell= (e) => {
 
-
+    }
     render() {
         //const elements = ['1', '2', '3', '4', '5'];
         // console.log(this.props.level);
+        const cellType = this.props.cellType;
+        const mode = this.state.mode;
+        // console.log('cellType : '+cellType)
         return (
             <>
-                <div className='cell'/>
+                <div className='cell' onClick={this.f_clickedBtnCell}>
+                    {(mode==='open') ? cellType : ''}
+                </div>
                 {/* <button className='Cell' /> */}
                 {/* <button className='Cell'/> */}
                 {/* <div className='Cell'> </div> */}

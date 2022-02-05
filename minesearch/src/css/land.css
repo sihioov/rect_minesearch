@@ -5,7 +5,7 @@
 .wcell {
     height: 20px;
     width: 20px;
-    background-color: grey;
+    background-color: white;
     border-width: 1px;
     align-items: center;
     float: left;
@@ -14,68 +14,70 @@
 
 .wcell-md-01 {
     border-style: solid;
-    border-color: green;
-    border-color: black;
+    /* border-color: green;
+    border-color: black; */
 }
 
 /* Top side */
 .wcell-side-01 {
     border-style: solid;
-    border-color: aqua;
+    
     border-top-width: 2px;
-    border-color: black;
+    /* border-color: aqua; */
+    /* border-color: black; */
 }
 
 /* Right side */
 .wcell-side-02 {
     border-style: solid;
-    border-color: gold;
+    
     border-right-width: 2px;
-    border-color: black;
+    /* border-color: gold; */
+    /* border-color: black; */
 }
 
 /* Bottom side */
 .wcell-side-03 {
     border-style: solid;
-    border-color: palevioletred;
     border-bottom-width: 2px;
-    border-color: black;
+    /* border-color: palevioletred; */
+    /* border-color: black; */
 }
 
 /* Left side */
 .wcell-side-04 {
     border-style: solid;
-    border-color: red;
     border-left-width: 2px;
-    border-color: black;
+    /* border-color: red; */
+    /* border-color: black; */
 }
 
 .wcell-corner-01 {
     border-style: solid;
-    border-color: black;
     border-left-width: 2px;
     border-top-width: 2px;
     border-top-left-radius: 40%;
+    /* border-color: black; */
 }
 
 .wcell-corner-02 {
     border-style: solid;
-    border-color: black;
     border-width: 2px 2px 1px 1px;
     border-top-right-radius: 40%;
+    /* border-color: black; */
     
 }
 
 .wcell-corner-03 {
     border-style: solid;
-    border-color: black;
     border-width: 1px 1px 2px 2px;
     border-bottom-left-radius: 40%;
+    /* border-color: black; */
 }
 
 .wcell-corner-04 {
     border-style: solid;
-    border-color: black;
     border-width: 1px 2px 2px 1px;
     border-bottom-right-radius: 40%;
+    /* border-color: black; */
 }
