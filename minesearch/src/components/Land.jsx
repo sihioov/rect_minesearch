@@ -436,18 +436,30 @@ class Land extends Component {
     }
 
     f_clickedBtnWrapCell = async (e) => {
-        console.log('WrapperCell')
+        
+        // Todo: Is this return when opend?
+        const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
+        const arry = this.f_getAroundCellArray(selectedCellNum);
+        console.log('selectedNum : '+arry);
+
         if (this.state.isGenerateCells) {
             //const id = document.getElementById(e.target.id);
+            for (var items of arry) {
 
+            }
+            
         } else {    // First click
-            console.log('target : '+e.target.id);
+            // console.log('target : '+e.target.id);
             await this.f_generateMine(e);
             await this.f_generateCells(e);
             this.setState({
                 isGenerateCells: true,
             })
         }
+    }
+
+    f_openSpread = () => {
+        
     }
 
     f_checkCellStatus = (statusObject) => {
