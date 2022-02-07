@@ -17,13 +17,13 @@ class Cell extends Component {
     }
     constructor(props) {
         super(props);
-
+        console.log('modetype : '+this.props.mode);
         this.state = {
             cell: this.props.cell,
             curImg: this.__img[0],
             mineNumber: 10,
             surfaceCellType: '',
-            innerCellType: this.props.cellType,
+            cellType: this.props.cellType,
             mode: this.props.mode,
             isCorrect: '',
         }
@@ -73,7 +73,7 @@ class Cell extends Component {
 
         // if surface is flaged, skip event
         if (this.state.surfaceCellType === this.flag || this.state.mode === 'open') {
-            console.log('return');
+            // console.log('return');
             return;
         }
         // console.log('드엉왔어 : '+this.props.cellType)
@@ -246,11 +246,13 @@ class Cell extends Component {
         const innerCellType = this.props.cellType;
         const surfaceCellType = this.state.surfaceCellType;
         const mode = this.state.mode;
+        console.log('mode : '+mode);
         // console.log('cellType : '+cellType)
         return (
             <>
                 <div className='cell' onMouseUp={this.f_clickedBtnCell}>
                     {(mode === 'open') ? innerCellType : surfaceCellType}
+                    {/* {innerCellType} */}
                     {/* {cellType} */}
                 </div>
                 {/* <button className='Cell' /> */}
