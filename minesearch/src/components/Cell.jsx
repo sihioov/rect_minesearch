@@ -17,7 +17,7 @@ class Cell extends Component {
     }
     constructor(props) {
         super(props);
-        console.log('modetype : '+this.props.mode);
+        // console.log('modetype : '+this.props.mode);
         this.state = {
             cell: this.props.cell,
             curImg: this.__img[0],
@@ -110,6 +110,7 @@ class Cell extends Component {
         }
 
         if (mode === 'close') {
+            
             this.setState({
                 surfaceCellType: '⛳',
             })
@@ -246,7 +247,7 @@ class Cell extends Component {
         const innerCellType = this.props.cellType;
         const surfaceCellType = this.state.surfaceCellType;
         const mode = this.state.mode;
-        console.log('mode : '+mode);
+        // console.log('mode : '+mode);
         // console.log('cellType : '+cellType)
         return (
             <>

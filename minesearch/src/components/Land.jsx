@@ -53,7 +53,7 @@ class Land extends Component {
             horizontalLength: this.state.horizontalLengthCategory[props.curGameLevel],
             verticalLength: this.state.verticalLengthCategory[props.curGameLevel],
             cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()],
-            modeTypeArray: [Array(this.state.landSizeCategory[this.props.curGameLevel]).fill('open')],
+            modeTypeArray: [...Array(this.state.landSizeCategory[this.props.curGameLevel]).fill('close')],
             };
         })
     }
@@ -84,7 +84,7 @@ class Land extends Component {
 
     // Game over
     f_f_checkCellStatus = (e) => {
-        console.log(e);
+        // console.log(e);
     }
 
 
@@ -95,7 +95,7 @@ class Land extends Component {
 
         if(this.state.isGenerateCells)
             return;
-        console.log('????')
+        // console.log('????')
         const landSize = this.state.landSize;
         const totalMineCount = this.state.totalMineCount;
         const horizontalLength = this.state.horizontalLength;
@@ -105,11 +105,11 @@ class Land extends Component {
         const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
         // console.log('Target OD : '+e.currentTarget.id);
 
-        console.log('selectedNum : '+selectedCellNum);
+        // console.log('selectedNum : '+selectedCellNum);
         var leftMineCount = totalMineCount;
         var leftCells = landSize - 1; // Exclude selected cell
 
-        console.log('Generate : ' + landSize);
+        // console.log('Generate : ' + landSize);
 
         const test = ['asd', 'zxc', 'qwe']
         // Probability
@@ -120,7 +120,7 @@ class Land extends Component {
         var count = 0;
 
         //const cellShape = this.f_getCellShape(selectedCellNum);
-        console.log('selecteddCell : '+selectedCellNum);
+        // console.log('selecteddCell : '+selectedCellNum);
         const excludedCell = this.f_getAroundCellArray(selectedCellNum);
         leftCells -= excludedCell.length;   // Exclude select cell around
         // console.log('excludeCellArray : '+excludedCell);
@@ -187,10 +187,12 @@ class Land extends Component {
     }
     
     f_getAroundCellArray = (inputCellNumber) => {
+        // console.log('f_getAroundCellArray')
         var cellNumber = parseInt(inputCellNumber)
         const cellShape = this.f_getCellShape(cellNumber);
         const resultArray = [];
         const horizontalLength = this.state.horizontalLength;
+        // console.log('cellNumber : '+cellNumber);
         switch (cellShape)
         {
             case "leftTopCorner":
@@ -233,7 +235,7 @@ class Land extends Component {
                 resultArray.push(cellNumber + horizontalLength - 1);
                 resultArray.push(cellNumber - horizontalLength - 1);
                 break;
-            case "bottomSide":
+                case "bottomSide":
                 resultArray.push(cellNumber);
                 resultArray.push(cellNumber - 1);
                 resultArray.push(cellNumber + 1);
@@ -249,7 +251,7 @@ class Land extends Component {
                 resultArray.push(cellNumber - horizontalLength + 1);
                 resultArray.push(cellNumber + horizontalLength + 1);
                 break;
-            case "centerCell":
+                case "centerCell":
                 resultArray.push(cellNumber);
                 resultArray.push(cellNumber - 1);
                 resultArray.push(cellNumber + 1);
@@ -263,7 +265,7 @@ class Land extends Component {
             default:
                 break;
         }
-
+        // console.log('result : '+resultArray);
         return resultArray;
     }
 
@@ -433,7 +435,7 @@ class Land extends Component {
         })
     }
     
-    f_btnClickedGameStart = (e) => {
+    f_clickedBtnGameStart = (e) => {
         this.f_resetGame();
         this.f_init_game_setting();
     }
@@ -442,27 +444,49 @@ class Land extends Component {
         
         // Todo: Is this return when opend?
         const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
-        const arry = this.f_getAroundCellArray(selectedCellNum);
-        console.log('selectedNum : '+arry);
-
+        const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
+        // console.log('selectedNum : '+arry);        
+        // this.f_cellOpenSpread(arry);
         if (this.state.isGenerateCells) {
             //const id = document.getElementById(e.target.id);
-            for (var items of arry) {
-
-            }
+            
             
         } else {    // First click
             // console.log('target : '+e.target.id);
             await this.f_generateMine(e);
             await this.f_generateCells(e);
+            // for (var items of arry) {
+            //     console.log(items);
+            // }
+            this.f_cellOpenSpread(aroundCellArry);
             this.setState({
                 isGenerateCells: true,
             })
         }
     }
 
-    f_openSpread = () => {
-        
+    f_cellOpenSpread = async (aroundCellArry) => {
+        console.log('f_cellOpenSpread');
+        const cellTypeArry = this.state.cellTypeArray;
+        const modeTypeArry = this.state.modeTypeArray;
+        var nextAroundCellArry = [];
+        // console.log('cellTypeArry : '+cellTypeArry)
+        for (var cellNumber of aroundCellArry) {
+            if (cellTypeArry[cellNumber] === 0 && modeTypeArry[cellNumber] == 'close') {
+                nextAroundCellArry = await this.f_getAroundCellArray(cellNumber);
+                // nextAroundCellArry.remove(0);
+                nextAroundCellArry.shift();
+                console.log('next : '+nextAroundCellArry);
+                modeTypeArry[cellNumber] = 'open';
+                this.setState({modeTypeArray: nextAroundCellArry});
+                await this.f_cellOpenSpread(nextAroundCellArry);
+
+                //this.setState({modeTypeArray: nextAroundCellArry});
+            } else {
+                continue;
+            }
+            // if ()
+        }
     }
 
     f_checkCellStatus = (statusObject) => {
@@ -582,7 +606,7 @@ class Land extends Component {
                         <option value="1">Normal</option>
                         <option value="2">Hard</option>
                     </select>
-                    <button className='button-start' onClick={this.f_btnClickedGameStart}>Start game</button>
+                    <button className='button-start' onClick={this.f_clickedBtnGameStart}>Start game</button>
                     {/* <button onClick={this.gameOptionSet}>Game start</button> */}
                 </div>
             </>
