@@ -488,9 +488,10 @@ class Land extends Component {
                 await this.f_cellOpenSpread(nextAroundCellArry);
 
                 //this.setState({modeTypeArray: nextAroundCellArry});
-            } 
-            // else if {} 
-            else {
+            } else if (cellTypeArry[cellNumber] !== 0 && cellTypeArry[cellNumber] !== this.mine && modeTypeArry[cellNumber] === 'close') {
+                modeTypeArry[cellNumber] = 'open';
+                this.setState({modeTypeArray: modeTypeArry});
+            } else {
                 continue;
             }
             // if ()
