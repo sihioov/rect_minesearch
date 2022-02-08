@@ -76,19 +76,13 @@ class Cell extends Component {
             // console.log('return');
             return;
         }
-        // console.log('드엉왔어 : '+this.props.cellType)
 
         // GameOver
         if (this.props.cellType !== this.mine) {
-            // console.log('지롸 아니다 야')
-            this.setState({
-                mode: 'open'
-            })
+            this.setState({mode: 'open'})
             this.f_cellStatusCheck(true, false);
         } else if (this.props.cellType === this.mine) {
-            this.setState({
-                mode: 'open'
-            })
+            this.setState({mode: 'open'})
             this.f_gameOver();
         }
         // this.changeImage(e);
@@ -246,7 +240,7 @@ class Cell extends Component {
         // console.log(this.props.level);
         const innerCellType = this.props.cellType;
         const surfaceCellType = this.state.surfaceCellType;
-        const mode = this.state.mode;
+        const mode = this.props.mode;
         // console.log('mode : '+mode);
         // console.log('cellType : '+cellType)
         return (

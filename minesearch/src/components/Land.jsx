@@ -271,7 +271,7 @@ class Land extends Component {
 
     f_generateCells = (e) => {
         
-        console.log('generateCells');
+        // console.log('generateCells');
         var cells = this.state.cellTypeArray;
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
@@ -297,9 +297,9 @@ class Land extends Component {
 
     f_isMineCell = (cellNumber) => {
         const ret = (this.state.cellTypeArray[cellNumber] === this.mine);
-
         return ret;
     }
+    
     f_incCellWeightByDirection = (direction, cell) => {
         cell[direction] = (cell[direction] !== this.mine) ? cell[direction] += 1 : cell[direction];
         //console.log('aaaa')
@@ -425,7 +425,7 @@ class Land extends Component {
         return cellNumber;
     }
 
-    f_resetGame = () => {
+    f_reset_game = () => {
         const selectedLevelOption = document.getElementById('startSelect').
         options[document.getElementById('startSelect').selectedIndex].value;
         
@@ -436,7 +436,7 @@ class Land extends Component {
     }
     
     f_clickedBtnGameStart = (e) => {
-        this.f_resetGame();
+        this.f_reset_game();
         this.f_init_game_setting();
     }
 
@@ -447,9 +447,16 @@ class Land extends Component {
         const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
         // console.log('selectedNum : '+arry);        
         // this.f_cellOpenSpread(arry);
+        const arry = this.state.modeTypeArray;
         if (this.state.isGenerateCells) {
             //const id = document.getElementById(e.target.id);
-            
+            arry[selectedCellNum] = 'open';
+            this.setState({modeTypeArray: arry})
+
+            if (this.state.cellTypeArray[selectedCellNum] === 0) {
+                this.f_cellOpenSpread(aroundCellArry);
+            }
+            // this.setState({})
             
         } else {    // First click
             // console.log('target : '+e.target.id);
@@ -459,12 +466,11 @@ class Land extends Component {
             //     console.log(items);
             // }
             this.f_cellOpenSpread(aroundCellArry);
-            this.setState({
-                isGenerateCells: true,
-            })
+            this.setState({isGenerateCells: true,})
         }
     }
 
+    // Todo: Spread open number
     f_cellOpenSpread = async (aroundCellArry) => {
         console.log('f_cellOpenSpread');
         const cellTypeArry = this.state.cellTypeArray;
@@ -472,17 +478,19 @@ class Land extends Component {
         var nextAroundCellArry = [];
         // console.log('cellTypeArry : '+cellTypeArry)
         for (var cellNumber of aroundCellArry) {
-            if (cellTypeArry[cellNumber] === 0 && modeTypeArry[cellNumber] == 'close') {
+            if (cellTypeArry[cellNumber] === 0 && modeTypeArry[cellNumber] === 'close') {
                 nextAroundCellArry = await this.f_getAroundCellArray(cellNumber);
                 // nextAroundCellArry.remove(0);
-                nextAroundCellArry.shift();
-                console.log('next : '+nextAroundCellArry);
+                // nextAroundCellArry.shift();
+                // console.log('next : '+nextAroundCellArry);
                 modeTypeArry[cellNumber] = 'open';
-                this.setState({modeTypeArray: nextAroundCellArry});
+                this.setState({modeTypeArray: modeTypeArry});
                 await this.f_cellOpenSpread(nextAroundCellArry);
 
                 //this.setState({modeTypeArray: nextAroundCellArry});
-            } else {
+            } 
+            // else if {} 
+            else {
                 continue;
             }
             // if ()
