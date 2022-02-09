@@ -19,6 +19,7 @@ class Cell extends Component {
         super(props);
         // console.log('modetype : '+this.props.mode);
         this.state = {
+            cellId: this.props.cellId,
             cell: this.props.cell,
             curImg: this.__img[0],
             mineNumber: 10,
@@ -193,7 +194,7 @@ class Cell extends Component {
         } 
     }
     // Todo: Inner cell click event
-    f_clickedBtnCell= (e) => {
+    f_clickedBtnCell = (e) => {
         // console.log('asdasd')
         // e.preventDefault();
         if (typeof e == 'object') {
@@ -235,6 +236,10 @@ class Cell extends Component {
         // }
     }
 
+    componentDidMount = () => {
+        
+    }
+
     render() {
         //const elements = ['1', '2', '3', '4', '5'];
         // console.log(this.props.level);
@@ -243,9 +248,12 @@ class Cell extends Component {
         const mode = this.props.mode;
         // console.log('mode : '+mode);
         // console.log('cellType : '+cellType)
+        // const style = {
+        //     // backgroundColor: (mode === 'open') ? 'red' : 'blue'
+        // }
         return (
             <>
-                <div className='cell' onMouseUp={this.f_clickedBtnCell}>
+                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} >
                     {(mode === 'open') ? innerCellType : surfaceCellType}
                     {/* {innerCellType} */}
                     {/* {cellType} */}

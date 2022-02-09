@@ -39,7 +39,7 @@
     /* margin: 0 auto; */
     display: inline-block;
     /* align-items: center; */
-    background-color: beige;
+    background-color: rgb(236, 219, 230);
     position: relative;
     /* height: 4px; */
     /* width: 3px;
@@ -57,10 +57,9 @@
     /* background-color: blue; */
 }
 
-/* .cell:hover {
-    width: 10px;
-    height: 10px;
-} */
+.cell:hover {
+    background-color: rgb(243, 243, 243);
+}
 
 .btn {
     width: 4px;
