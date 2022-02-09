@@ -502,8 +502,9 @@ class Land extends Component {
         // wcellStyle.borderColor = '#F3F3F3'; // Cell default color
         const sideWidth = this.state.sideWidth + 'px';
         // wcellStyle.border = sideWith + ' sold ' + 'F3F3F3';
-        wcellStyle.border = `${sideWidth} solid #F3F3F3`;
+        // wcellStyle.border = `${sideWidth} solid #F3F3F3`;
         wcellStyle.border = `1px solid #F3F3F3`;
+        wcellStyle.borderColor = 'grey';
         wcellStyle.width = '26px';
         wcellStyle.height = '26px';
         // wcellStyle.width = '23px';

@@ -77,7 +77,7 @@ class Cell extends Component {
             // console.log('return');
             return;
         }
-
+        
         // GameOver
         if (this.props.cellType !== this.mine) {
             this.setState({mode: 'open'})
