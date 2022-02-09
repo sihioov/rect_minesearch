@@ -36,7 +36,7 @@ class Land extends Component {
             cellTypeArray: [],
             modeTypeArray: [],
             defaultCellSize: 20 + 4 + 4,    // 20px + 1px(border) + 1px(border)
-            sideWidth: 0,                   // 1px(side px) + 1px(another side px)
+            sideWidth: 4,                   // 1px(side px) + 1px(another side px)
             // innerCellType: 'close',
         }
     }
@@ -87,9 +87,6 @@ class Land extends Component {
         // console.log(e);
     }
 
-
-    // Todo: Auto landSize set by game level // Done
-    // Todo: Generate entire cell array
 
     f_generateMine = (e) => {
 
@@ -456,6 +453,7 @@ class Land extends Component {
             if (this.state.cellTypeArray[selectedCellNum] === 0) {
                 this.f_cellOpenSpread(aroundCellArry);
             }
+            this.f_changeOpendCellColor(selectedCellNum);
             // this.setState({})
             
         } else {    // First click
@@ -470,7 +468,6 @@ class Land extends Component {
         }
     }
 
-    // Todo: Spread open number
     f_cellOpenSpread = async (aroundCellArry) => {
         console.log('f_cellOpenSpread');
         const cellTypeArry = this.state.cellTypeArray;
@@ -486,10 +483,11 @@ class Land extends Component {
                 modeTypeArry[cellNumber] = 'open';
                 this.setState({modeTypeArray: modeTypeArry});
                 await this.f_cellOpenSpread(nextAroundCellArry);
-                await this.f_changeOpendCellColor();
+                await this.f_changeOpendCellColor(cellNumber);
                 //this.setState({modeTypeArray: nextAroundCellArry});
             } else if (cellTypeArry[cellNumber] !== 0 && cellTypeArry[cellNumber] !== this.mine && modeTypeArry[cellNumber] === 'close') {
                 modeTypeArry[cellNumber] = 'open';
+                await this.f_changeOpendCellColor(cellNumber);
                 this.setState({modeTypeArray: modeTypeArry});
             } else {
                 continue;
@@ -499,7 +497,23 @@ class Land extends Component {
     }
 
     f_changeOpendCellColor = (cellNumber) => {
+        const wcellId = `wrapperCell_${cellNumber}`;
+        const wcellStyle = document.getElementById(wcellId).style;
+        // wcellStyle.borderColor = '#F3F3F3'; // Cell default color
+        const sideWidth = this.state.sideWidth + 'px';
+        // wcellStyle.border = sideWith + ' sold ' + 'F3F3F3';
+        wcellStyle.border = `${sideWidth} solid #F3F3F3`;
+        wcellStyle.border = `1px solid #F3F3F3`;
+        wcellStyle.width = '26px';
+        wcellStyle.height = '26px';
+        // wcellStyle.width = '23px';
+        // this.setState({defaultCellSize: 26})
+        // wcellStyle.height = '23px';
 
+
+        // this.setState({defaultCellSize: this.state.defaultCellSize - 6})
+        // wcellStyle.border = '1px';
+        console.log('wcelId : '+wcellId);
     }
 
     f_checkCellStatus = (statusObject) => {
