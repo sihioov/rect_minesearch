@@ -15,10 +15,7 @@
     border-color:white darkgrey darkgrey white;
 }
 
-.wcell:hover {
-    display: inline-block;
-    background-color: red;
-}
+
 
 
 .wcell-md-01 {

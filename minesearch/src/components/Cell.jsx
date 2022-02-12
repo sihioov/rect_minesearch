@@ -250,6 +250,12 @@ class Cell extends Component {
         // if (this.state.mode === 'open')
         (this.state.mode === 'open' ? this.setState({cellSize: 26}) : this.setState({cellSize: 20}))
 
+        // console.log('CheckGameOVer');
+        // if (this.state.mode ===' open' && this.props.cellType === this.mine) {
+        //     // this.state.innerCellType
+        //     this.f_cellStatusCheck(false, false);
+        // }
+
     }
 
     render() {
@@ -258,6 +264,14 @@ class Cell extends Component {
         const innerCellType = this.props.cellType;
         const surfaceCellType = this.state.surfaceCellType;
         const mode = this.props.mode;
+
+        // if (innerCellType === this.mine)
+        //     console.log('mode : '+this.props.mode)
+        // console.log('innerType : '+innerCellType);
+        if (this.props.mode === 'open' && innerCellType === this.mine)
+            this.f_cellStatusCheck(false, true);
+        //     this.f_cellStatusCheck(false, false);
+
         // console.log('mode : '+mode);
         // console.log('cellType : '+cellType)
         // const style = {
@@ -281,7 +295,7 @@ class Cell extends Component {
             width: (mode === 'close' ? '20px' : '26px'),
             height: (mode === 'close' ? '20px' : '26px'),
             backgroundColor: (mode === 'close' ? '#ECD8E6' : '#FFF7FF'),
-            hover: {backgroundColor: 'red'},
+            // hover: {backgroundColor: 'red'},
             // alignItems: 'center',
             // backgroundColor: (mode === 'close' ? 'red' : 'blue'),
             // (this.state.mode === 'open' ? this.setState({cellSize: 26}) : this.setState({cellSize: 20}))

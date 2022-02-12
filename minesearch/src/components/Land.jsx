@@ -54,7 +54,7 @@ class Land extends Component {
             horizontalLength: this.state.horizontalLengthCategory[props.curGameLevel],
             verticalLength: this.state.verticalLengthCategory[props.curGameLevel],
             cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()],
-            modeTypeArray: [...Array(this.state.landSizeCategory[this.props.curGameLevel]).fill('close')],
+            modeTypeArray: [...Array(this.state.landSizeCategory[props.curGameLevel]).fill('close')],
             };
         })
     }
@@ -70,6 +70,8 @@ class Land extends Component {
         // During rendering, auto set landsize
         land.style.width  = defaultCellSize * horizontalLength + sideWidth +'px';
         land.style.height = defaultCellSize * verticalLength + sideWidth + 'px';
+        
+        console.log('defaultwidth : '+horizontalLength)
         
         // Send data to Board component
         this.props.setLandVerticalLength(land.style.width);
@@ -98,6 +100,7 @@ class Land extends Component {
         const totalMineCount = this.state.totalMineCount;
         const horizontalLength = this.state.horizontalLength;
         const cells = new Array(landSize);
+        // console.log('landSize : '+landSize);
         cells.fill(0);
         
         const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
@@ -313,8 +316,8 @@ class Land extends Component {
             if (document.getElementById(cellId).textContent==this.flag)
                 count++;
         }
-        // 주위에 지뢰갯수와 써진 숫자와 맞으면 실행되는 거 까지는 되지만 지뢰도 같이 opend가 된다
-        console.log('count : '+count);
+        
+        
         if (count == wcellText) {
             const modeTypeArry = this.state.modeTypeArray;
             for (var index of aroundArry) {

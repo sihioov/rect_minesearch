@@ -49,3 +49,8 @@
 
 .select-level option {
 }
+
+#timeBoard {
+    top: 60px;
+    position: relative;
+}

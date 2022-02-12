@@ -72,6 +72,7 @@ class Board extends Component {
         return (
             <>  
                 <Land curGameLevel={this.state.curGameLevel} setLandVerticalLength={this.setLandVerticalLength}/>
+                <div id="timeBoard">asdasd</div>
             </>
         );
     }
