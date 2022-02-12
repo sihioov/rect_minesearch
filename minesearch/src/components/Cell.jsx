@@ -95,7 +95,7 @@ class Cell extends Component {
     f_clickedRightBtn = (e) => {
         e.preventDefault();
         //if (this.state.mode === 'mine');
-        console.log('click Right');
+        // console.log('click Right');
         const mode = this.state.mode;
 
         if (this.state.surfaceCellType === this.flag) {
@@ -296,7 +296,7 @@ class Cell extends Component {
         const innerCellType = this.props.cellType;
         
         const mode = this.props.mode;
-        console.log('Cell rendering')
+        // console.log('Cell rendering')
         // if (this.props.isReset === true) {
         //     console.log('aaa')
         //     innerCellType = '';

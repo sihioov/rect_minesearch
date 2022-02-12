@@ -180,7 +180,7 @@ class Land extends Component {
                 leftCells--;
             } 
         }
-        console.log(cells);
+        // console.log(cells);
 
         this.setState({
             cellTypeArray: cells,
@@ -301,6 +301,7 @@ class Land extends Component {
         return isMine;
     }
 
+    
     f_isAroundFlagCorrect = (id) => {
 
         const wcellNum = this.f_getCellNumber(id);
@@ -308,6 +309,8 @@ class Land extends Component {
         const wcellId = 'wrapperCell_'+wcellNum;
         const wcellText = document.getElementById(wcellId).textContent;
 
+        
+        
         // const targetText = 
         // const objId = ''
         var count = 0;
@@ -320,18 +323,31 @@ class Land extends Component {
         
         if (count == wcellText) {
             const modeTypeArry = this.state.modeTypeArray;
-            for (var index of aroundArry) {
-            
-                if (document.getElementById('cell_'+index).textContent === this.flag)
+            for (var value of aroundArry) {
+                var aroundCellArry = this.f_getAroundCellArray(value);
+                if (document.getElementById('cell_'+value).textContent === this.flag)
                     continue;
+                console.log('aroundCellArry : '+aroundArry)
+                console.log('value : '+value)
+                console.log('value value : '+aroundCellArry[value]);
+                if (this.state.cellTypeArray[value] === 0) {
+                    // console.log('aaa')
+                    this.f_cellOpenSpread(aroundCellArry);
+                } 
+                else {
+                    // console.log('bbb')
+                    modeTypeArry[value] = 'open';
+                    this.f_changeOpendCellColor(value);
+                    this.setState({
+                        modeTypeArray: modeTypeArry,
+                    })
+                }
+
                 // console.log('textContext : '+document.getElementById('cell_'+index).textContent)
-                modeTypeArry[index] = 'open';
-                this.f_changeOpendCellColor(index);
+                
             }
             
-            this.setState({
-                modeTypeArray: modeTypeArry,
-            })
+            
             
             console.log(modeTypeArry);
             // this.state.modeTypeArray[wcellNum]
@@ -554,8 +570,10 @@ class Land extends Component {
 
         
             // console.log('button1213 : '+e.buttons);
+        // Both click
         if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
             this.f_isAroundFlagCorrect(e.target.id);
+            return;
         }
 
         const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
@@ -586,6 +604,7 @@ class Land extends Component {
     }
 
 
+    // Recursion
     f_cellOpenSpread = async (aroundCellArry) => {
         
         const cellTypeArry = this.state.cellTypeArray;
@@ -593,6 +612,7 @@ class Land extends Component {
         var nextAroundCellArry = [];
         // console.log('cellTypeArry : '+cellTypeArry)
         for (var cellNumber of aroundCellArry) {
+            // console.log('Recursion')
             if (cellTypeArry[cellNumber] === 0 && modeTypeArry[cellNumber] === 'close') {
                 nextAroundCellArry = await this.f_getAroundCellArray(cellNumber);
                 // nextAroundCellArry.remove(0);
@@ -689,7 +709,7 @@ class Land extends Component {
 
 
     f_checkCellStatus = (statusObject) => {
-        console.log(statusObject);
+        // console.log(statusObject);
         if (statusObject.isGameOVer === true) {
             alert('GameOver');
         }
