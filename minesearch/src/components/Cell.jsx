@@ -28,6 +28,7 @@ class Cell extends Component {
             mode: props.mode,
             isCorrect: '',
             cellSize: 20,
+            isReset: props.isReset,
         }
     }
 
@@ -246,8 +247,23 @@ class Cell extends Component {
         // }
     }
 
+    f_reset = () => {
+
+        console.log('asd')
+
+        // this.setState({surfaceCellType: ''})
+    }
+
+    componentDidUpdate = (props) => {
+        // console.log('aaa')
+        //console.log('isReset : '+props.isReset)
+        if (props.isReset === true)
+            this.setState({surfaceCellType: '',})
+    }
+
     componentDidMount = () => {
         // if (this.state.mode === 'open')
+        // this.props.f_reset;
         (this.state.mode === 'open' ? this.setState({cellSize: 26}) : this.setState({cellSize: 20}))
 
         // console.log('CheckGameOVer');
@@ -261,9 +277,30 @@ class Cell extends Component {
     render() {
         //const elements = ['1', '2', '3', '4', '5'];
         // console.log(this.props.level);
+        // if (this.props.isReset === true)
+        //     var surfaceCellType = '';
+        // else
+        //     var surfaceCellType = '';
+
+        // if (this.props.isReset === true)
+        //     var surfaceCellType = '';
+        // else
+        var surfaceCellType = '';
+        if (this.props.isReset === true) {
+            surfaceCellType = '';
+        } else {
+            surfaceCellType = this.state.surfaceCellType;
+        }
+            
+        // const surfaceCellType = this.state.surfaceCellType;
         const innerCellType = this.props.cellType;
-        const surfaceCellType = this.state.surfaceCellType;
+        
         const mode = this.props.mode;
+        console.log('Cell rendering')
+        // if (this.props.isReset === true) {
+        //     console.log('aaa')
+        //     innerCellType = '';
+        // }
 
         // if (innerCellType === this.mine)
         //     console.log('mode : '+this.props.mode)

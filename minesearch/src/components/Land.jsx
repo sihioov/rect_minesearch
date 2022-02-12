@@ -38,6 +38,7 @@ class Land extends Component {
             modeTypeArray: [],
             defaultCellSize: 20 + 4 + 4,    // 20px + 1px(border) + 1px(border)
             sideWidth: 4,                   // 1px(side px) + 1px(another side px)
+            isReset: false,
             // innerCellType: 'close',
         }
     }
@@ -55,6 +56,7 @@ class Land extends Component {
             verticalLength: this.state.verticalLengthCategory[props.curGameLevel],
             cellsId: [...Array(this.state.landSizeCategory[props.curGameLevel]).keys()],
             modeTypeArray: [...Array(this.state.landSizeCategory[props.curGameLevel]).fill('close')],
+            // isReset: false,
             };
         })
     }
@@ -70,8 +72,6 @@ class Land extends Component {
         // During rendering, auto set landsize
         land.style.width  = defaultCellSize * horizontalLength + sideWidth +'px';
         land.style.height = defaultCellSize * verticalLength + sideWidth + 'px';
-        
-        console.log('defaultwidth : '+horizontalLength)
         
         // Send data to Board component
         this.props.setLandVerticalLength(land.style.width);
@@ -463,7 +463,6 @@ class Land extends Component {
     }
     f_getCellNumber = (cellId) => {
         const cellNumber = cellId.split('_')[1];
-
         return cellNumber;
     }
 
@@ -479,9 +478,26 @@ class Land extends Component {
         const selectedLevelOption = document.getElementById('startSelect').
         options[document.getElementById('startSelect').selectedIndex].value;
         
+        const landSize = this.state.landSize;
+
+        // Land re-init draw
+        for (var i = 0; i<landSize; i++) {
+            this.f_changeClosedCellColor(i);
+            //document.getElementById('wrapperCell_'+landSize).textContent = '';
+        }
+
         this.setState({
             curGameLevel: selectedLevelOption,
+            totalMineCount: this.state.mineCountCategory[this.state.curGameLevel],
+            landSize: this.state.landSizeCategory[this.state.curGameLevel],
+            lineLength: this.state.lineLengthCategory[this.state.curGameLevel],
+            horizontalLength: this.state.horizontalLengthCategory[this.state.curGameLevel],
+            verticalLength: this.state.verticalLengthCategory[this.state.curGameLevel],
+            cellsId: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).keys()],
+            modeTypeArray: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).fill('close')],
+            cellTypeArray: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).fill(0)],
             isGenerateCells: false,
+            // isReset: true,
         })
     }
     
@@ -490,25 +506,57 @@ class Land extends Component {
         this.f_init_game_setting();
     }
     
+    f_downedWrapCellBox = (e) => {
+
+        // console.log('console : '+e.target.id)
+        // if (e.button === 2) {
+        //     const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
+        //     const selectedCellId = `cell_${selectedCellNum}`;
+        //     var selectedCell = document.getElementById(selectedCellId);
+        //     // console.log('1!!!!'+selectedCellText)
+        //     if (selectedCell.textContent === this.flag) {
+        //         // console.log(selectedCellNum)
+        //         console.log('togle1');
+        //         selectedCell = '';
+        //     } else {
+        //         selectedCell = this.flag;
+        //     }
+
+        //     // console.log('selectedCell : '+selectedCell.textContent);
+
+        // }
+    }
+
+    f_downedBtnStart = (e) => {
+        setTimeout(() => {
+            this.setState({isReset : true})
+        }, 100)
+        
+    }
+
+    f_upBtnStart = (e) => {
+        setTimeout(() => {
+            this.setState({isReset : false})
+        }, 100)
+    }
+
     f_clickedWrapCellBox = async (e) => {
         
         // Todo: Is this return when opend?
         const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
         const selectedCellId = `cell_${selectedCellNum}`;
         const selectedCell = document.getElementById(selectedCellId);
-        console.log(selectedCell.textContent);
+        console.log('which : '+e.which);
 
         // No response, if cell is falg
         if (selectedCell.textContent === this.flag)
             return;
 
-        //if (e.button)
+        
             // console.log('button1213 : '+e.buttons);
         if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
             this.f_isAroundFlagCorrect(e.target.id);
-            console.log('both click');
         }
-            
 
         const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
         // console.log('selectedNum : '+arry);        
@@ -539,7 +587,7 @@ class Land extends Component {
 
 
     f_cellOpenSpread = async (aroundCellArry) => {
-        console.log('f_cellOpenSpread');
+        
         const cellTypeArry = this.state.cellTypeArray;
         const modeTypeArry = this.state.modeTypeArray;
         var nextAroundCellArry = [];
@@ -566,14 +614,30 @@ class Land extends Component {
         }
     }
 
+
+    f_changeClosedCellColor = (cellNumber) => {
+        
+        const wcellId = `wrapperCell_${cellNumber}`;
+        const wcellStyle = document.getElementById(wcellId).style;
+        // height: 20px;
+        // width: 20px;
+        // border: 4px solid transparent;
+        // align-items: center;
+        // float: left;
+        // text-align: center;
+        // border-color:white darkgrey darkgrey white;
+
+        wcellStyle.border = `4px solid #ECD8E6`;
+        wcellStyle.borderColor = 'white darkgrey darkgrey white';
+        wcellStyle.width = '20px';
+        wcellStyle.height = '20px';
+    }
+
     f_changeOpendCellColor = (cellNumber) => {
         const wcellId = `wrapperCell_${cellNumber}`;
         const wcellStyle = document.getElementById(wcellId).style;
-        // wcellStyle.borderColor = '#F3F3F3'; // Cell default color
-        const sideWidth = this.state.sideWidth + 'px';
-        // wcellStyle.border = sideWith + ' sold ' + 'F3F3F3';
-        // wcellStyle.border = `${sideWidth} solid #F3F3F3`;
-        wcellStyle.border = `1px solid #F3F3F3`;
+
+        wcellStyle.border = `1px solid #FFF7FF`;
         wcellStyle.borderColor = 'grey';
         wcellStyle.width = '26px';
         wcellStyle.height = '26px';
@@ -674,65 +738,65 @@ class Land extends Component {
                         if (index === 0) {
                             // console.log('index : '+(landSize - lineLength));
                             return (
-                                <div key={index} className='wcell wcell-corner-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
+                                <div key={index} className='wcell wcell-corner-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox} onMouseDown={this.f_downedWrapCellBox} >
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} />
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset} />
                                 </div>
                             )
                         } else if (index === (landSize -1)) {
                         return (
                             <div key={index} className='wcell wcell-corner-04' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                 {/* {this.state.cellTypeArray[index]} */}
-                                <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} />
+                                <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                             </div> 
                             )
                         } else if (index === horizontalLength -1) {
                             return (
                                 <div key={index} className='wcell wcell-corner-02' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         } else if (index === (landSize - horizontalLength)) {
                         return (
                             <div key={index} className='wcell wcell-corner-03' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                 {/* {this.state.cellTypeArray[index]} */}
-                                <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                             </div>
                             )
                         } else if (index < horizontalLength) {
                             return (
                                 <div key={index} className='wcell wcell-side-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         } else if ((index % horizontalLength) === 0) {
                             return (
                                 <div key={index} className='wcell wcell-side-04' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         } else if((index % horizontalLength) === (horizontalLength - 1)) {
                             return (
                                 <div key={index} className='wcell wcell-side-02' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         } else if(index > (landSize - horizontalLength)) {
                             return (
                                 <div key={index} className='wcell wcell-side-03' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         } else {
                             return (
                                 <div key={index} className='wcell wcell-md-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox}>
                                     {/* {this.state.cellTypeArray[index]} */}
-                                    <Cell cellId={"cell_"+index} onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]}/>
+                                    <Cell cellId={"cell_"+index}  onCheck={this.f_checkCellStatus} cellType={this.state.cellTypeArray[index]} mode={this.state.modeTypeArray[index]} isReset={this.state.isReset}/>
                                 </div>
                             )
                         }
@@ -745,7 +809,7 @@ class Land extends Component {
                         <option value="1">Normal</option>
                         <option value="2">Hard</option>
                     </select>
-                    <button className='button-start' onClick={this.f_clickedBtnGameStart}>Start game</button>
+                    <button className='button-start' onClick={this.f_clickedBtnGameStart} onMouseDown={this.f_downedBtnStart} onMouseUp={this.f_upBtnStart}>Start game</button>
                     {/* <button onClick={this.gameOptionSet}>Game start</button> */}
                 </div>
             </>
