@@ -294,12 +294,49 @@ class Land extends Component {
     }
 
     f_isMineCell = (cellNumber) => {
-        const ret = (this.state.cellTypeArray[cellNumber] === this.mine);
-        return ret;
+        const isMine = (this.state.cellTypeArray[cellNumber] === this.mine);
+        return isMine;
     }
 
-    f_isArroundFlagCorrect = (e) => {
-        
+    f_isAroundFlagCorrect = (id) => {
+
+        const wcellNum = this.f_getCellNumber(id);
+        const aroundArry = this.f_getAroundCellArray(wcellNum);
+        const wcellId = 'wrapperCell_'+wcellNum;
+        const wcellText = document.getElementById(wcellId).textContent;
+
+        // const targetText = 
+        // const objId = ''
+        var count = 0;
+        for (var obj of aroundArry) {
+            const cellId = this.f_getCellIdByNum(obj);
+            if (document.getElementById(cellId).textContent==this.flag)
+                count++;
+        }
+        // 주위에 지뢰갯수와 써진 숫자와 맞으면 실행되는 거 까지는 되지만 지뢰도 같이 opend가 된다
+        console.log('count : '+count);
+        if (count == wcellText) {
+            const modeTypeArry = this.state.modeTypeArray;
+            for (var index of aroundArry) {
+            
+                if (document.getElementById('cell_'+index).textContent === this.flag)
+                    continue;
+                // console.log('textContext : '+document.getElementById('cell_'+index).textContent)
+                modeTypeArry[index] = 'open';
+                this.f_changeOpendCellColor(index);
+            }
+            
+            this.setState({
+                modeTypeArray: modeTypeArry,
+            })
+            
+            console.log(modeTypeArry);
+            // this.state.modeTypeArray[wcellNum]
+            // console.log('Excute!!');
+        }
+
+
+
     }
     
     f_incCellWeightByDirection = (direction, cell) => {
@@ -427,6 +464,14 @@ class Land extends Component {
         return cellNumber;
     }
 
+    f_getWcellIdIdByNum = (cellNumber) => {
+        return `wapperCell_${cellNumber}`;
+    }
+
+    f_getCellIdByNum = (cellNumber) => {
+        return `cell_${cellNumber}`;
+    }
+
     f_reset_game = () => {
         const selectedLevelOption = document.getElementById('startSelect').
         options[document.getElementById('startSelect').selectedIndex].value;
@@ -457,6 +502,7 @@ class Land extends Component {
         //if (e.button)
             // console.log('button1213 : '+e.buttons);
         if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
+            this.f_isAroundFlagCorrect(e.target.id);
             console.log('both click');
         }
             
