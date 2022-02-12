@@ -25,8 +25,9 @@ class Cell extends Component {
             mineNumber: 10,
             surfaceCellType: '',
             cellType: this.props.cellType,
-            mode: this.props.mode,
+            mode: props.mode,
             isCorrect: '',
+            cellSize: 20,
         }
     }
 
@@ -75,6 +76,7 @@ class Cell extends Component {
         // if surface is flaged, skip event
         if (this.state.surfaceCellType === this.flag || this.state.mode === 'open') {
             // console.log('return');
+            // console.log('???')
             return;
         }
         
@@ -95,7 +97,7 @@ class Cell extends Component {
         console.log('click Right');
         const mode = this.state.mode;
 
-        if (this.state.surfaceCellType === '⛳') {
+        if (this.state.surfaceCellType === this.flag) {
             console.log('reSet flag');
             this.setState({
                 surfaceCellType: '',
@@ -107,7 +109,7 @@ class Cell extends Component {
         if (mode === 'close') {
             
             this.setState({
-                surfaceCellType: '⛳',
+                surfaceCellType: this.flag,
             })
         }
 
@@ -226,6 +228,14 @@ class Cell extends Component {
         return this.state.isCorrect;
     }
 
+    f_overedCell = (e) => {
+        const id = e.currentTarget.id;
+
+        const obj = document.getElementById(id);
+        // obj.style.color = 'red';
+        // obj.style.textAlign = 'center';
+    }
+
     // close
     f_modeClose = () => {
         const innerCellType = this.props.cellType;
@@ -237,7 +247,9 @@ class Cell extends Component {
     }
 
     componentDidMount = () => {
-        
+        // if (this.state.mode === 'open')
+        (this.state.mode === 'open' ? this.setState({cellSize: 26}) : this.setState({cellSize: 20}))
+
     }
 
     render() {
@@ -251,9 +263,33 @@ class Cell extends Component {
         // const style = {
         //     // backgroundColor: (mode === 'open') ? 'red' : 'blue'
         // }
+
+        // const wcellStyle = document.getElementById(wcellId).style;
+        // wcellStyle.borderColor = '#F3F3F3'; // Cell default color
+        // const sideWidth = this.state.sideWidth + 'px';
+        // wcellStyle.border = sideWith + ' sold ' + 'F3F3F3';
+        // wcellStyle.border = `${sideWidth} solid #F3F3F3`;
+        // wcellStyle.border = `1px solid #F3F3F3`;
+        // wcellStyle.borderColor = 'grey';
+        // wcellStyle.width = '26px';
+        // wcellStyle.height = '26px';
+        // const cellSize = 
+        // const mode = this.props.mode;
+
+        const cellStyle = {
+            
+            width: (mode === 'close' ? '20px' : '26px'),
+            height: (mode === 'close' ? '20px' : '26px'),
+            backgroundColor: (mode === 'close' ? '#ECD8E6' : '#FFF7FF'),
+            hover: {backgroundColor: 'red'},
+            // alignItems: 'center',
+            // backgroundColor: (mode === 'close' ? 'red' : 'blue'),
+            // (this.state.mode === 'open' ? this.setState({cellSize: 26}) : this.setState({cellSize: 20}))
+            // height: '26px'
+        }
         return (
             <>
-                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} >
+                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} onMouseOver={this.f_overedCell} style={cellStyle}>
                     {(mode === 'open') ? innerCellType : surfaceCellType}
                     {/* {innerCellType} */}
                     {/* {cellType} */}

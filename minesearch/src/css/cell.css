@@ -36,11 +36,14 @@
 .cell {
     width: 20px;
     height: 20px;
-    /* margin: 0 auto; */
     display: inline-block;
-    /* align-items: center; */
     background-color: rgb(236, 219, 230);
     position: relative;
+    text-align: center;
+    /* margin: 0 auto; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* vertical-align: middle; */
     /* height: 4px; */
     /* width: 3px;
     height: 3px; */
@@ -55,10 +58,6 @@
     padding: 5px;
     background-color: #d3d3d3; */
     /* background-color: blue; */
-}
-
-.cell:hover {
-    background-color: rgb(243, 243, 243);
 }
 
 .btn {

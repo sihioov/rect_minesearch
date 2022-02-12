@@ -11,7 +11,13 @@
     align-items: center;
     float: left;
     text-align: center;
+    /* display: inline-block; */
     border-color:white darkgrey darkgrey white;
+}
+
+.wcell:hover {
+    display: inline-block;
+    background-color: red;
 }
 
 
