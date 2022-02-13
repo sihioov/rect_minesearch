@@ -31,13 +31,19 @@ class Board extends Component {
         console.log('test');
     }
 
+    clickedLand = () => {
+        setInterval(() => {
+            console.log('time')
+        }, 1000);
+    }
+
     setLandVerticalLength = (data) => {
-        if (data !== this.state.landVerticalLength) {
-            this.setState({
-                landVerticalLength: data,
-            })
-        } else {
-        }
+        // if (data !== this.state.landVerticalLength) {
+        //     this.setState({
+        //         landVerticalLength: data,
+        //     })
+        // } else {
+        // }
 
         var wrapperSelect = document.getElementById('wrapperSelect');
         wrapperSelect.style.width = data;
@@ -71,7 +77,7 @@ class Board extends Component {
         }
         return (
             <>  
-                <Land curGameLevel={this.state.curGameLevel} setLandVerticalLength={this.setLandVerticalLength}/>
+                <Land curGameLevel={this.state.curGameLevel} setLandVerticalLength={this.setLandVerticalLength} onClick={this.clickedLand}/>
                 <div id="timeBoard">asdasd</div>
             </>
         );

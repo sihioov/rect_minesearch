@@ -43,9 +43,19 @@ class Land extends Component {
         }
     }
 
-
+    // Todo: Rendering reduce
     f_init_game_setting = () => {
         
+        // this.setState({
+        //     curGameLevel: this.props.curGameLevel,
+        //     totalMineCount: this.state.mineCountCategory[this.props.curGameLevel],
+        //     landSize: this.state.landSizeCategory[this.props.curGameLevel],
+        //     lineLength: this.state.lineLengthCategory[this.props.curGameLevel],
+        //     horizontalLength: this.state.horizontalLengthCategory[this.props.curGameLevel],
+        //     verticalLength: this.state.verticalLengthCategory[this.props.curGameLevel],
+        //     cellsId: [...Array(this.state.landSizeCategory[this.props.curGameLevel]).keys()],
+        //     modeTypeArray: [...Array(this.state.landSizeCategory[this.props.curGameLevel]).fill('close')],
+        // })
         this.setState((props) => {
             return {
             curGameLevel: props.curGameLevel,
@@ -95,6 +105,8 @@ class Land extends Component {
 
         if(this.state.isGenerateCells)
             return;
+
+        this.props.onClick();
         // console.log('????')
         const landSize = this.state.landSize;
         const totalMineCount = this.state.totalMineCount;
@@ -327,9 +339,9 @@ class Land extends Component {
                 var aroundCellArry = this.f_getAroundCellArray(value);
                 if (document.getElementById('cell_'+value).textContent === this.flag)
                     continue;
-                console.log('aroundCellArry : '+aroundArry)
-                console.log('value : '+value)
-                console.log('value value : '+aroundCellArry[value]);
+                // console.log('aroundCellArry : '+aroundArry)
+                // console.log('value : '+value)
+                // console.log('value value : '+aroundCellArry[value]);
                 if (this.state.cellTypeArray[value] === 0) {
                     // console.log('aaa')
                     this.f_cellOpenSpread(aroundCellArry);
@@ -510,8 +522,8 @@ class Land extends Component {
             horizontalLength: this.state.horizontalLengthCategory[this.state.curGameLevel],
             verticalLength: this.state.verticalLengthCategory[this.state.curGameLevel],
             cellsId: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).keys()],
-            modeTypeArray: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).fill('close')],
-            cellTypeArray: [...Array(this.state.landSizeCategory[this.state.curGameLevel]).fill(0)],
+            modeTypeArray: [Array(this.state.landSizeCategory[this.state.curGameLevel]).fill('close')],
+            cellTypeArray: [Array(this.state.landSizeCategory[this.state.curGameLevel]).fill(0)],
             isGenerateCells: false,
             // isReset: true,
         })
@@ -562,7 +574,7 @@ class Land extends Component {
         const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
         const selectedCellId = `cell_${selectedCellNum}`;
         const selectedCell = document.getElementById(selectedCellId);
-        console.log('which : '+e.which);
+        // console.log('which : '+e.which);
 
         // No response, if cell is falg
         if (selectedCell.textContent === this.flag)
@@ -747,6 +759,7 @@ class Land extends Component {
     }
     
     render() {
+        console.log('Land rendring')
         
         const horizontalLength = this.state.horizontalLength; 
         const landSize = this.state.landSize;

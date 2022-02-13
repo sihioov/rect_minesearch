@@ -95,11 +95,11 @@ class Cell extends Component {
     f_clickedRightBtn = (e) => {
         e.preventDefault();
         //if (this.state.mode === 'mine');
-        // console.log('click Right');
+        console.log('click Right');
         const mode = this.state.mode;
 
         if (this.state.surfaceCellType === this.flag) {
-            console.log('reSet flag');
+            // console.log('reSet flag');
             this.setState({
                 surfaceCellType: '',
             })
@@ -108,7 +108,7 @@ class Cell extends Component {
         }
 
         if (mode === 'close') {
-            
+            console.log('Set to flag!')
             this.setState({
                 surfaceCellType: this.flag,
             })
@@ -200,6 +200,7 @@ class Cell extends Component {
     f_clickedBtnCell = (e) => {
         // console.log('asdasd')
         // e.preventDefault();
+        // console.log('asd')
         if (typeof e == 'object') {
             // console.log('e : '+e.button);
             switch (e.button) {
@@ -275,6 +276,7 @@ class Cell extends Component {
     }
 
     render() {
+        console.log('Cell rendering');
         //const elements = ['1', '2', '3', '4', '5'];
         // console.log(this.props.level);
         // if (this.props.isReset === true)
@@ -305,8 +307,10 @@ class Cell extends Component {
         // if (innerCellType === this.mine)
         //     console.log('mode : '+this.props.mode)
         // console.log('innerType : '+innerCellType);
+
         if (this.props.mode === 'open' && innerCellType === this.mine)
             this.f_cellStatusCheck(false, true);
+            
         //     this.f_cellStatusCheck(false, false);
 
         // console.log('mode : '+mode);
