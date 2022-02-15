@@ -46,6 +46,7 @@ class Land extends Component {
 
     // Todo: Rendering reduce
     f_init_game_setting = () => {
+        // console.log('f_init_game_setting');
         
         // this.setState({
         //     curGameLevel: this.props.curGameLevel,
@@ -73,7 +74,7 @@ class Land extends Component {
     }
 
     f_drawLand = () => {
-
+        // console.log('f_drawLand');
         var land = document.getElementsByClassName('land')[0];
         const defaultCellSize  = this.state.defaultCellSize;
         const horizontalLength = this.state.horizontalLengthCategory[this.state.curGameLevel];
@@ -103,10 +104,10 @@ class Land extends Component {
 
 
     f_generateMine = (e) => {
-        console.log('generate 1');
+        // console.log('generate 1');
         if(this.state.isGenerateCells)
             return;
-            console.log('generate 2');
+        // console.log('generate 2');
         this.props.onClick();
         // console.log('????')
         const landSize = this.state.landSize;
@@ -202,6 +203,7 @@ class Land extends Component {
     }
     
     f_getAroundCellArray = (inputCellNumber) => {
+        console.log('f_getArroundCEllArray');
         // console.log('f_getAroundCellArray')
         var cellNumber = parseInt(inputCellNumber)
         const cellShape = this.f_getCellShape(cellNumber);
@@ -286,7 +288,7 @@ class Land extends Component {
 
     f_generateCells = (e) => {
         
-        // console.log('generateCells');
+        console.log('generateCells');
         var cells = this.state.cellTypeArray;
         const verticalLength = this.state.verticalLength;
         const horizontalLength = this.state.horizontalLength;
@@ -305,6 +307,7 @@ class Land extends Component {
         
         //virtualCells[300] = 0;
         // console.log('virtualCells : '+virtualCells);
+        console.log(virtualCells)
         this.setState({
             cellTypeArray: virtualCells,
         })
@@ -574,6 +577,8 @@ class Land extends Component {
 
     f_clickedWrapCellBox = async (e) => {
         
+        if (this.state.isGenerateCells === true)
+            return;
         // Todo: Is this return when opend?
         // const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
         // const selectedCellId = `cell_${selectedCellNum}`;
@@ -781,7 +786,7 @@ class Land extends Component {
                 <div className='land' id='land' >
                     {this.state.cellsId.map((value, index) => {
                         if (index === 0) {
-                            // console.log('index : '+(landSize - lineLength));
+                            console.log('index : '+(landSize - horizontalLength));
                             return (
                                 <div key={index} className='wcell wcell-corner-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox} onMouseDown={this.f_downedWrapCellBox} >
                                     {/* {this.state.cellTypeArray[index]} */}

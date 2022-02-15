@@ -25,7 +25,8 @@ class Cell extends Component {
             mineNumber: 10,
             surfaceCellType: '',
             cellType: this.props.cellType,
-            mode: props.mode,
+            mode: 'close',
+            // mode: props.mode,
             isCorrect: '',
             cellSize: 20,
             isReset: props.isReset,
@@ -258,8 +259,8 @@ class Cell extends Component {
     componentDidUpdate = (props) => {
         // console.log('aaa')
         //console.log('isReset : '+props.isReset)
-        if (props.isReset === true)
-            this.setState({surfaceCellType: '',})
+        // if (props.isReset === true)
+        //     this.setState({surfaceCellType: '',})
     }
 
     componentDidMount = () => {
@@ -276,9 +277,17 @@ class Cell extends Component {
     }
 
     f_cellDown = (e) => {
-        console.log('cell component down : '+e.target.id);
+        // console.log('cell component down : '+e.target.id);
+        // this.setState({
+        //     surfaceCellType: '1',
+        // })
+    }
+
+    f_onClick = (e) => {
+        // console.log('f_onClick : '+this.props.cellType);
         this.setState({
-            surfaceCellType: '1',
+            innerCellType: this.props.cellType,
+            mode: 'open',
         })
     }
 
@@ -304,7 +313,7 @@ class Cell extends Component {
         // const surfaceCellType = this.state.surfaceCellType;
         const innerCellType = this.props.cellType;
         
-        const mode = this.props.mode;
+        const mode = this.state.mode;
         // console.log('Cell rendering')
         // if (this.props.isReset === true) {
         //     console.log('aaa')
@@ -351,7 +360,7 @@ class Cell extends Component {
         }
         return (
             <>
-                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} onMouseOver={this.f_overedCell} style={cellStyle} onMouseDown={this.f_cellDown}>
+                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} onMouseOver={this.f_overedCell} style={cellStyle} onMouseDown={this.f_cellDown} onClick={this.f_onClick}>
                     {(mode === 'open') ? innerCellType : surfaceCellType}
                     {/* {innerCellType} */}
                     {/* {cellType} */}

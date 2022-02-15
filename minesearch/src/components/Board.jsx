@@ -32,9 +32,9 @@ class Board extends Component {
     }
 
     clickedLand = () => {
-        setInterval(() => {
-            console.log('time')
-        }, 1000);
+        // setInterval(() => {
+        //     console.log('time')
+        // }, 1000);
     }
 
     setLandVerticalLength = (data) => {
