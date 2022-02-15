@@ -275,6 +275,13 @@ class Cell extends Component {
 
     }
 
+    f_cellDown = (e) => {
+        console.log('cell component down : '+e.target.id);
+        this.setState({
+            surfaceCellType: '1',
+        })
+    }
+
     render() {
         console.log('Cell rendering');
         //const elements = ['1', '2', '3', '4', '5'];
@@ -310,7 +317,7 @@ class Cell extends Component {
 
         if (this.props.mode === 'open' && innerCellType === this.mine)
             this.f_cellStatusCheck(false, true);
-            
+
         //     this.f_cellStatusCheck(false, false);
 
         // console.log('mode : '+mode);
@@ -344,7 +351,7 @@ class Cell extends Component {
         }
         return (
             <>
-                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} onMouseOver={this.f_overedCell} style={cellStyle}>
+                <div id={this.state.cellId} className='cell' onMouseUp={this.f_clickedBtnCell} onMouseOver={this.f_overedCell} style={cellStyle} onMouseDown={this.f_cellDown}>
                     {(mode === 'open') ? innerCellType : surfaceCellType}
                     {/* {innerCellType} */}
                     {/* {cellType} */}

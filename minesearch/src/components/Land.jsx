@@ -39,6 +39,7 @@ class Land extends Component {
             defaultCellSize: 20 + 4 + 4,    // 20px + 1px(border) + 1px(border)
             sideWidth: 4,                   // 1px(side px) + 1px(another side px)
             isReset: false,
+            test: '',
             // innerCellType: 'close',
         }
     }
@@ -571,48 +572,51 @@ class Land extends Component {
     f_clickedWrapCellBox = async (e) => {
         
         // Todo: Is this return when opend?
-        const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
-        const selectedCellId = `cell_${selectedCellNum}`;
-        const selectedCell = document.getElementById(selectedCellId);
-        // console.log('which : '+e.which);
+        // const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
+        // const selectedCellId = `cell_${selectedCellNum}`;
+        // const selectedCell = document.getElementById(selectedCellId);
+        // // console.log('which : '+e.which);
 
-        // No response, if cell is falg
-        if (selectedCell.textContent === this.flag)
-            return;
+        // // No response, if cell is falg
+        // if (selectedCell.textContent === this.flag)
+        //     return;
 
         
-            // console.log('button1213 : '+e.buttons);
-        // Both click
-        if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
-            this.f_isAroundFlagCorrect(e.target.id);
-            return;
-        }
+        //     // console.log('button1213 : '+e.buttons);
+        // // Both click
+        // if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
+        //     this.f_isAroundFlagCorrect(e.target.id);
+        //     return;
+        // }
 
-        const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
-        // console.log('selectedNum : '+arry);        
-        // this.f_cellOpenSpread(arry);
-        const arry = this.state.modeTypeArray;
-        if (this.state.isGenerateCells) {
-            //const id = document.getElementById(e.target.id);
-            arry[selectedCellNum] = 'open';
-            this.setState({modeTypeArray: arry})
+        // const aroundCellArry = this.f_getAroundCellArray(selectedCellNum);
+        // // console.log('selectedNum : '+arry);        
+        // // this.f_cellOpenSpread(arry);
+        // const arry = this.state.modeTypeArray;
+        // if (this.state.isGenerateCells) {
+        //     //const id = document.getElementById(e.target.id);
+        //     arry[selectedCellNum] = 'open';
+        //     this.setState({modeTypeArray: arry})
             
-            if (this.state.cellTypeArray[selectedCellNum] === 0) {
-                this.f_cellOpenSpread(aroundCellArry);
-            }
-            this.f_changeOpendCellColor(selectedCellNum);
-            // this.setState({})
+        //     if (this.state.cellTypeArray[selectedCellNum] === 0) {
+        //         this.f_cellOpenSpread(aroundCellArry);
+        //     }
+        //     this.f_changeOpendCellColor(selectedCellNum);
+        //     // this.setState({})
             
-        } else {    // First click
-            // console.log('target : '+e.target.id);
-            await this.f_generateMine(e);
-            await this.f_generateCells(e);
-            // for (var items of arry) {
-            //     console.log(items);
-            // }
-            this.f_cellOpenSpread(aroundCellArry);
-            this.setState({isGenerateCells: true,})
-        }
+        // } else {    // First click
+        //     // console.log('target : '+e.target.id);
+        //     await this.f_generateMine(e);
+        //     await this.f_generateCells(e);
+        //     // for (var items of arry) {
+        //     //     console.log(items);
+        //     // }
+        //     this.f_cellOpenSpread(aroundCellArry);
+        //     this.setState({isGenerateCells: true,})
+        // }
+
+        await this.f_generateMine(e);
+        await this.f_generateCells(e);
     }
 
 
@@ -631,12 +635,16 @@ class Land extends Component {
                 // nextAroundCellArry.shift();
                 // console.log('next : '+nextAroundCellArry);
                 modeTypeArry[cellNumber] = 'open';
+
+                // shlim_render
                 this.setState({modeTypeArray: modeTypeArry});
                 await this.f_cellOpenSpread(nextAroundCellArry);
                 await this.f_changeOpendCellColor(cellNumber);
                 //this.setState({modeTypeArray: nextAroundCellArry});
             } else if (cellTypeArry[cellNumber] !== 0 && cellTypeArry[cellNumber] !== this.mine && modeTypeArry[cellNumber] === 'close') {
                 modeTypeArry[cellNumber] = 'open';
+
+                // shlim_render
                 await this.f_changeOpendCellColor(cellNumber);
                 this.setState({modeTypeArray: modeTypeArry});
             } else {
@@ -756,10 +764,11 @@ class Land extends Component {
 
     componentDidUpdate = () => {
         this.f_drawLand();
+        // console.log('1111');
     }
     
     render() {
-        console.log('Land rendring')
+        // console.log('Land rendring')
         
         const horizontalLength = this.state.horizontalLength; 
         const landSize = this.state.landSize;
