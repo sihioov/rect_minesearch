@@ -103,10 +103,10 @@ class Land extends Component {
 
 
     f_generateMine = (e) => {
-
+        console.log('generate 1');
         if(this.state.isGenerateCells)
             return;
-
+            console.log('generate 2');
         this.props.onClick();
         // console.log('????')
         const landSize = this.state.landSize;
@@ -197,6 +197,7 @@ class Land extends Component {
 
         this.setState({
             cellTypeArray: cells,
+            isGenerateCells: true,
         })
     }
     
@@ -536,7 +537,7 @@ class Land extends Component {
     }
     
     f_downedWrapCellBox = (e) => {
-
+        console.log('downedWrapCell');
         // console.log('console : '+e.target.id)
         // if (e.button === 2) {
         //     const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
@@ -557,16 +558,18 @@ class Land extends Component {
     }
 
     f_downedBtnStart = (e) => {
-        setTimeout(() => {
-            this.setState({isReset : true})
-        }, 100)
+        console.log('downedBtnStart')
+        // setTimeout(() => {
+        //     this.setState({isReset : true})
+        // }, 100)
         
     }
 
     f_upBtnStart = (e) => {
-        setTimeout(() => {
-            this.setState({isReset : false})
-        }, 100)
+        console.log('upbtnStart');
+        // setTimeout(() => {
+        //     this.setState({isReset : false})
+        // }, 100)
     }
 
     f_clickedWrapCellBox = async (e) => {
@@ -768,7 +771,7 @@ class Land extends Component {
     }
     
     render() {
-        // console.log('Land rendring')
+        console.log('Land rendring')
         
         const horizontalLength = this.state.horizontalLength; 
         const landSize = this.state.landSize;
