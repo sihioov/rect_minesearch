@@ -348,10 +348,15 @@ class Cell extends Component {
         // const mode = this.props.mode;
 
         const cellStyle = {
-            
+            // width: (mode === 'close' ? '20px' : '28px'),
+            // height: (mode === 'close' ? '20px' : '28px'),
+
             width: (mode === 'close' ? '20px' : '26px'),
             height: (mode === 'close' ? '20px' : '26px'),
-            backgroundColor: (mode === 'close' ? '#ECD8E6' : '#FFF7FF'),
+            // backgroundColor: (mode === 'close' ? '#ECD8E6' : '#FFF7FF'),
+            // backgroundColor: (mode === 'close' ? 'blue' : 'red'),
+
+
             // hover: {backgroundColor: 'red'},
             // alignItems: 'center',
             // backgroundColor: (mode === 'close' ? 'red' : 'blue'),
