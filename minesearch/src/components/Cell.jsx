@@ -350,9 +350,10 @@ class Cell extends Component {
         const cellStyle = {
             // width: (mode === 'close' ? '20px' : '28px'),
             // height: (mode === 'close' ? '20px' : '28px'),
-
-            width: (mode === 'close' ? '20px' : '26px'),
-            height: (mode === 'close' ? '20px' : '26px'),
+            top: (mode === 'close' ? '' : '-2.5px'),
+            left: (mode === 'close' ? '' : '-2.5px'),
+            width: (mode === 'close' ? '20px' : '25.5px'),
+            height: (mode === 'close' ? '20px' : '25.5px'),
             // backgroundColor: (mode === 'close' ? '#ECD8E6' : '#FFF7FF'),
             // backgroundColor: (mode === 'close' ? 'blue' : 'red'),
 

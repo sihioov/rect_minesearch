@@ -36,7 +36,7 @@ class Land extends Component {
             verticalLength: '',
             cellTypeArray: [],
             modeTypeArray: [],
-            defaultCellSize: 20 + 4 + 4,    // 20px + 1px(border) + 1px(border)
+            defaultCellSize: 20 + 1 + 1,    // 20px + 1px(border) + 1px(border)
             sideWidth: 4,                   // 1px(side px) + 1px(another side px)
             isReset: false,
             test: '',
