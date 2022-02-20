@@ -11,6 +11,7 @@ class Land extends Component {
     static a = ['asd', 'zxc'];
     mine = '💣';
     flag = '⛳';
+    cacheCell = [];
     constructor(props) {
         super(props);
         
@@ -36,7 +37,7 @@ class Land extends Component {
             verticalLength: '',
             cellTypeArray: [],
             modeTypeArray: [],
-            defaultCellSize: 20 + 1 + 1,    // 20px + 1px(border) + 1px(border)
+            defaultCellSize: 20 + 6,    // 20px + 1px(border) + 1px(border)
             sideWidth: 4,                   // 1px(side px) + 1px(another side px)
             isReset: false,
             test: '',
@@ -577,8 +578,23 @@ class Land extends Component {
 
     f_clickedWrapCellBox = async (e) => {
         
-        if (this.state.isGenerateCells === true)
+
+
+
+        if (this.state.isGenerateCells === true) {
+            this.setState({test: 'asd'})
+            const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
+            const selectedCellId = `cell_${selectedCellNum}`;
+            
+            if (e.buttons === 2 && this.state.modeTypeArray[selectedCellNum] === 'open') {
+                this.f_isAroundFlagCorrect(e.target.id);
+                // return;
+            }
+            this.f_cellOpenSpread_new(selectedCellNum);
+
             return;
+
+        }
         // Todo: Is this return when opend?
         // const selectedCellNum = this.f_getCellNumber(e.currentTarget.id);
         // const selectedCellId = `cell_${selectedCellNum}`;
@@ -645,7 +661,7 @@ class Land extends Component {
                 modeTypeArry[cellNumber] = 'open';
 
                 // shlim_render
-                this.setState({modeTypeArray: modeTypeArry});
+                // this.setState({modeTypeArray: modeTypeArry});
                 await this.f_cellOpenSpread(nextAroundCellArry);
                 await this.f_changeOpendCellColor(cellNumber);
                 //this.setState({modeTypeArray: nextAroundCellArry});
@@ -654,12 +670,42 @@ class Land extends Component {
 
                 // shlim_render
                 await this.f_changeOpendCellColor(cellNumber);
-                this.setState({modeTypeArray: modeTypeArry});
+                // this.setState({modeTypeArray: modeTypeArry});
             } else {
                 continue;
             }
             // if ()
         }
+        return modeTypeArry;
+    }
+
+
+    f_cellOpenSpread_new = (cellNumber) => {
+        const horizontal = this.state.horizontalLength;
+        const vertical   = this.state.verticalLength;
+
+        console.log(cellNumber);
+        if (this.state.cellTypeArray[cellNumber]!=0) {
+            console.log('1111111')
+            return;
+        }
+
+        const aroundCellArry = this.f_getAroundCellArray(cellNumber);
+        const entireCellArry = this.state.cellTypeArray;
+        var virtualModeArry = [];
+        
+        for (var items of aroundCellArry) {
+            this.f_cellOpenSpread_new(items);
+            // virtualModeArry.push(this.f_cellOpenSpread_new(items));
+        }
+
+        const set = new Set(virtualModeArry);
+        const result = [...set];
+        // console.log(items);
+        // this.f_cellOpenSpread_new()
+        // console.log(entireCellArry);
+        // console.log('result : '+result);
+        // return result;
     }
 
 
@@ -786,7 +832,7 @@ class Land extends Component {
                 <div className='land' id='land' >
                     {this.state.cellsId.map((value, index) => {
                         if (index === 0) {
-                            console.log('index : '+(landSize - horizontalLength));
+                            // console.log('index : '+(landSize - horizontalLength));
                             return (
                                 <div key={index} className='wcell wcell-corner-01' id={"wrapperCell_"+index} onClick={this.f_clickedWrapCellBox} onMouseOver={this.f_overedWrapCellBox} onMouseLeave={this.f_leavedWrapCellBox} onMouseDown={this.f_downedWrapCellBox} >
                                     {/* {this.state.cellTypeArray[index]} */}
