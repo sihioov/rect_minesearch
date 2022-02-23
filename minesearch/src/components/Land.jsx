@@ -203,6 +203,90 @@ class Land extends Component {
         })
     }
     
+    f_getAroundCellArray2 = (inputCellNumber) => {
+        console.log('f_getArroundCEllArray');
+        // console.log('f_getAroundCellArray')
+        var cellNumber = parseInt(inputCellNumber)
+        const cellShape = this.f_getCellShape(cellNumber);
+        const resultArray = [];
+        const horizontalLength = this.state.horizontalLength;
+        // console.log('cellNumber : '+cellNumber);
+        switch (cellShape)
+        {
+            case "leftTopCorner":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber + 1);
+                resultArray.push(cellNumber + horizontalLength);
+                resultArray.push(cellNumber + horizontalLength + 1);
+                break;
+            case "rightTopCorner":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber + horizontalLength);
+                resultArray.push(cellNumber + horizontalLength - 1);
+                break;
+            case "rightBottomCorner":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber - horizontalLength - 1);
+                break;
+            case "leftBottomCorner":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber - horizontalLength + 1);
+                resultArray.push(cellNumber + 1);
+                break;
+            case "topSide":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber + 1);
+                resultArray.push(cellNumber + horizontalLength - 1);
+                resultArray.push(cellNumber + horizontalLength + 1);
+                resultArray.push(cellNumber + horizontalLength);
+                break;
+            case "rightSide":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber + horizontalLength);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber + horizontalLength - 1);
+                resultArray.push(cellNumber - horizontalLength - 1);
+                break;
+                case "bottomSide":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber + 1);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber - horizontalLength - 1);
+                resultArray.push(cellNumber - horizontalLength + 1);
+                break;
+            case "leftSide":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber + 1);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber + horizontalLength);
+                resultArray.push(cellNumber - horizontalLength + 1);
+                resultArray.push(cellNumber + horizontalLength + 1);
+                break;
+                case "centerCell":
+                // resultArray.push(cellNumber);
+                resultArray.push(cellNumber - 1);
+                resultArray.push(cellNumber + 1);
+                resultArray.push(cellNumber - horizontalLength);
+                resultArray.push(cellNumber + horizontalLength);
+                resultArray.push(cellNumber - horizontalLength + 1);
+                resultArray.push(cellNumber + horizontalLength + 1);
+                resultArray.push(cellNumber - horizontalLength - 1);
+                resultArray.push(cellNumber + horizontalLength - 1);
+                break;
+            default:
+                break;
+        }
+        // console.log('result : '+resultArray);
+        return resultArray;
+    }
+
     f_getAroundCellArray = (inputCellNumber) => {
         console.log('f_getArroundCEllArray');
         // console.log('f_getAroundCellArray')
@@ -591,6 +675,7 @@ class Land extends Component {
                 // return;
             }
             this.f_cellOpenSpread_new(selectedCellNum);
+            console.log('Global cells : '+this.g_cells);
 
             return;
 
@@ -679,22 +764,37 @@ class Land extends Component {
         return modeTypeArry;
     }
 
+    g_cells = [];
+
+    // f_findIndex = (element) => {
+
+    //     if (element == 0)
+
+    //     return fruit.name === 'cherries';
+    // }
 
     f_cellOpenSpread_new = (cellNumber) => {
         const horizontal = this.state.horizontalLength;
         const vertical   = this.state.verticalLength;
 
         console.log(cellNumber);
+
+        
         if (this.state.cellTypeArray[cellNumber]!=0) {
-            console.log('1111111')
+            console.log('Spared pass');
             return;
         }
 
-        const aroundCellArry = this.f_getAroundCellArray(cellNumber);
+        // this.g_cells.push(cellNumber);
+        
+        const aroundCellArry = this.f_getAroundCellArray2(cellNumber);
+        this.g_cells = [...aroundCellArry];
         const entireCellArry = this.state.cellTypeArray;
         var virtualModeArry = [];
         
         for (var items of aroundCellArry) {
+            // if (this.g_cells.find(items))
+            //     continue;
             this.f_cellOpenSpread_new(items);
             // virtualModeArry.push(this.f_cellOpenSpread_new(items));
         }
