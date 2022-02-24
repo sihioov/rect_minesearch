@@ -1,7 +1,7 @@
 import { Component, useState } from 'react';
 // import cell from './cell';
 import Cell from './Cell';
-
+import Queue from '../util/Queue';
 import '../css/land.css'
 
 
@@ -663,7 +663,9 @@ class Land extends Component {
     f_clickedWrapCellBox = async (e) => {
         
 
-
+    let que = new Queue();
+    
+    console.log(que);
 
         if (this.state.isGenerateCells === true) {
             this.setState({test: 'asd'})
@@ -674,7 +676,7 @@ class Land extends Component {
                 this.f_isAroundFlagCorrect(e.target.id);
                 // return;
             }
-            this.f_cellOpenSpread_new(selectedCellNum);
+            //this.f_cellOpenSpread_new(selectedCellNum);
             console.log('Global cells : '+this.g_cells);
 
             return;
