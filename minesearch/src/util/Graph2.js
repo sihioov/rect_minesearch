@@ -2,8 +2,8 @@
 // UndirectedGraph
 
 export default class Graph2 {
-    constructor() {
-        this.edges = {};
+    constructor(array, length) {
+        this.edges = [];
     }
 
     _addVertex = (vertex) => {
@@ -21,7 +21,6 @@ export default class Graph2 {
         }
         delete this.edges[vertex];
     }
-
     _removeEdge = (vertex1, vertex2) => {
         if (this.edges[vertex1] && this.edges[vertex1][vertex2] !== undefined) {
             delete this.edges[vertex1][vertex2];
@@ -30,5 +29,4 @@ export default class Graph2 {
             delete this.edges[vertex2][vertex1];
         }
     }
-
 }

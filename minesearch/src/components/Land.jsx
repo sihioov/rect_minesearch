@@ -2,6 +2,7 @@ import { Component, useState } from 'react';
 // import cell from './cell';
 import Cell from './Cell';
 import Queue from '../util/Queue';
+import Graph2 from '../util/Graph2';
 import '../css/land.css'
 
 
@@ -551,6 +552,10 @@ class Land extends Component {
                 break;
 
         }
+    }
+
+    f_a = (cellNmuber) => {
+        var graph2 = new Graph2();
     }
 
     f_getCellShape = (cellNumber) => {
