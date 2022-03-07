@@ -561,7 +561,7 @@ class Land extends Component {
             graph2._addVertex(i);
         }
 
-
+        
 
         // graph2._addVertex(1);
         // graph2._addVertex(2);
