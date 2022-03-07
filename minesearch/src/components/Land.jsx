@@ -554,8 +554,21 @@ class Land extends Component {
         }
     }
 
-    f_a = (cellNmuber) => {
+    f_graphTest = (cellNmuber) => {
         var graph2 = new Graph2();
+        
+        for (var i of this.state.cellTypeArray) {// console.log('set : '+i);
+            graph2._addVertex(i);
+        }
+
+
+
+        // graph2._addVertex(1);
+        // graph2._addVertex(2);
+        // graph2._addVertex(3);
+        // graph2._addEdge(1, 2);
+        // graph2._addEdge(3, 1);
+        console.log(graph2);
     }
 
     f_getCellShape = (cellNumber) => {
@@ -668,9 +681,9 @@ class Land extends Component {
     f_clickedWrapCellBox = async (e) => {
         
 
-    let que = new Queue();
+    //let que = new Queue();
+
     
-    console.log(que);
 
         if (this.state.isGenerateCells === true) {
             this.setState({test: 'asd'})
@@ -733,6 +746,7 @@ class Land extends Component {
 
         await this.f_generateMine(e);
         await this.f_generateCells(e);
+        await this.f_graphTest();
     }
 
 

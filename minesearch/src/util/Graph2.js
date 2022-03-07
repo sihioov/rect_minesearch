@@ -1,13 +1,13 @@
 
 // UndirectedGraph
 
-export default class Graph2 {
-    constructor(array, length) {
-        this.edges = [];
+class Graph2 {
+    constructor() {
+        this.edges = {};
     }
 
     _addVertex = (vertex) => {
-        
+        this.edges[vertex] = {};
     }
 
     _addEdge = (vertex1, vertex2) => {
@@ -30,3 +30,5 @@ export default class Graph2 {
         }
     }
 }
+
+export default Graph2;
